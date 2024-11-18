@@ -15,7 +15,7 @@ const Signup = () => {
 
     return (
         <div className='flex min-w-full h-[88vh]'>
-            <div className="img absolute w-screen h-[90vh] z-0 overflow-hidden">
+            <div className="img absolute w-screen h-screen z-0 overflow-hidden">
                 <img src={bgImage} style={{ width: 10000 }} alt="image" />
             </div>
             <div className="left z-10 w-1/2 h-full items-center flex  justify-center flex-col">
@@ -47,7 +47,7 @@ const Signup = () => {
                     </div>
 
                     <input type="submit" className=' text-black w-20 m-auto mt-4 p-2  border rounded bg-slate-400 hover:bg-slate-300 cursor-pointer font-bold' value="Submit" />
-                <span className='text-right'>Already a user? <NavLink className={"underline text-green-500"} to={'/auth/ text-black login'}>Login</NavLink></span>
+                <span className='text-right'>Already a user? <NavLink className={"underline text-green-500"} to={'/auth/login'}>Login</NavLink></span>
                 </form>
             </div>
         </div>

@@ -19,11 +19,11 @@ function App() {
     },
     {
       path: '/auth/login',
-      element: <><Navbar /><Login /></>
+      element: <><Login /></>
     },
     {
       path: '/auth/signup',
-      element: <><Navbar /><Signup /></>
+      element: <><Signup /></>
     },
     {
       path: '/auth/login/forget',

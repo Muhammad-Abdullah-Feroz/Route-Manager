@@ -3,6 +3,11 @@
   padding: 0;
 }
 
+.text-border {
+  -webkit-text-stroke: 1px black;
+  /* color: white; */
+}
+
 /* #root {
   max-width: 1280px;
   margin: 0 auto;
