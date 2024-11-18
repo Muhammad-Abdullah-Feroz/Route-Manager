@@ -15,18 +15,19 @@ const Main = () => {
     const [routes, setRoutes] = useState(importedRoutes)
     
     const handleStatusChange = (title) => {
-    
-        for (const route of importedRoutes) {
-            if (route.title == title) {
-                if (route.status == "parked") {
-                    route.status = "enroute"
-                } else {
-                    route.status = "parked"
-                }
-                setRoutes(importedRoutes)
+        const updatedRoutes = routes.map((route) => {
+            if (route.title === title) {
+                return {
+                    ...route,
+                    status: route.status === "parked" ? "enroute" : "parked",
+                };
             }
-        }
-    }
+            return route;
+        });
+        setRoutes(updatedRoutes);
+        console.log("status changed...");
+        console.log(`title : ${title} :: status updated`);
+    };
     // setRoutes(importedRoutes)
     return (
         <div>
@@ -34,7 +35,7 @@ const Main = () => {
                 {
                     routes.map((route, index) => {
                         return (
-                            <BusHandle key={index} route={route} onClick={()=>handleStatusChange(route.title)} />
+                            <BusHandle key={index} route={route} onClick={()=> handleStatusChange(route.title)} />
                         )
                     })
                 }
