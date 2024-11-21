@@ -10,24 +10,27 @@ import Main from './components/Main'
 function App() {
   const router = createBrowserRouter([
     {
-      path: '/',
+      path: '/user',
       element: <><Navbar /><Main /></>
     },
+    // {
+    //   path: '/user/auth',
+    //   element: <><Login /></>
+    // },
     {
-      path: '/auth',
-      element: <><Navbar /><Login /></>
-    },
-    {
-      path: '/auth/login',
+      path: '/user/auth/login',
       element: <><Login /></>
     },
     {
-      path: '/auth/signup',
+      path:"/user/auth/verify/:slug"
+    },
+    {
+      path: '/user/auth/signup',
       element: <><Signup /></>
     },
     {
-      path: '/auth/login/forget',
-      element: <><Navbar /><Forget /></>
+      path: '/user/auth/forget/:slug',
+      element: <><Forget /></>
     },
   ])
 

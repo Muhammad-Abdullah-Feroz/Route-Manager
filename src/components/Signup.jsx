@@ -19,7 +19,7 @@ const Signup = () => {
                 <img src={bgImage} style={{ width: 10000 }} alt="image" />
             </div>
             <div className="left z-10 w-1/2 h-full items-center flex  justify-center flex-col">
-                <form action="" className='flex flex-col w-4/5 p-3 justify-center  gap-2 bg-black text-white bg-opacity-75 h-full my-20 px-10 rounded-3xl' onSubmit={handleSubmit(onSubmit)}>
+                <form action="" className='flex flex-col w-4/5 p-3 justify-center  gap-2bg-white/15 backdrop-blur-lg border border-white/20 shadow-lg-75 h-full my-20 px-10 rounded-3xl' onSubmit={handleSubmit(onSubmit)}>
                 
                 <span className='text-2xl text-center font-bold m-4'>Sign-Up Form </span>
 
