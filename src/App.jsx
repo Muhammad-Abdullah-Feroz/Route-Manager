@@ -7,6 +7,7 @@ import Signup from './components/Signup'
 import Forget from './components/Forget'
 import Main from './components/Main'
 import Complaint from './components/complaint'
+import AdminPanel from './components/AdminPanel'
 
 function App() {
   const router = createBrowserRouter([
@@ -17,6 +18,10 @@ function App() {
     {
       path: '/user',
       element: <><Navbar /><Main /></>
+    },
+    {
+      path: '/admin',
+      element: <><AdminPanel /></>
     },
     {
       path: '/complaint',
