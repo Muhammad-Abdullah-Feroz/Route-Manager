@@ -111,6 +111,11 @@ const AdminPanel = () => {
         <div className="p-8 bg-gray-100 h-screen overflow-y-scroll">
             <div className="bg-white rounded-lg shadow-md p-6">
                 <h2 className="text-3xl text-center font-bold text-gray-800 mb-6">Route Management</h2>
+                <NavLink to="/admin/add-route">
+                    <button className="bg-blue-600 text-white py-2 px-6 rounded-lg hover:bg-blue-700 transition duration-300 mb-6">
+                        Add New Route
+                    </button>
+                </NavLink>
                 <table className="w-full table-auto">
                     <thead className='text-lg'>
                         <tr className="bg-blue-600 text-white">

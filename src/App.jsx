@@ -8,6 +8,8 @@ import Forget from './components/Forget'
 import Main from './components/Main'
 import Complaint from './components/complaint'
 import AdminPanel from './components/AdminPanel'
+import EditRouteForm from './components/EditRouteForm'
+import AddRouteForm from './components/AddRouteForm'
 
 function App() {
   const router = createBrowserRouter([
@@ -18,6 +20,14 @@ function App() {
     {
       path: '/user',
       element: <><Navbar /><Main /></>
+    },
+    {
+      path: '/admin/add-route',
+      element: <><AddRouteForm /></>
+    },
+    {
+      path: '/admin/edit/:id',
+      element: <><EditRouteForm /></>
     },
     {
       path: '/admin',
