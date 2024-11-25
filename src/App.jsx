@@ -6,17 +6,22 @@ import Login from './components/Login'
 import Signup from './components/Signup'
 import Forget from './components/Forget'
 import Main from './components/Main'
+import Complaint from './components/complaint'
 
 function App() {
   const router = createBrowserRouter([
     {
+      path: '/',
+      element: <><Navbar /><Login /></>
+    },
+    {
       path: '/user',
       element: <><Navbar /><Main /></>
     },
-    // {
-    //   path: '/user/auth',
-    //   element: <><Login /></>
-    // },
+    {
+      path: '/complaint',
+      element: <><Navbar/><Complaint /></>
+    },
     {
       path: '/user/auth/login',
       element: <><Login /></>
