@@ -3,16 +3,25 @@ import { NavLink } from 'react-router-dom'
 
 const Navbar = () => {
     return (
-        <div className='bg-green-50 h-16 w-full flex justify-around items-center'>
+        <div className="bg-gradient-to-r from-green-400 to-blue-500 h-16 w-full flex justify-between items-center px-8 shadow-md">
+            {/* Logo */}
             <NavLink to={'/user'}>
-                <div className="logo font-extrabold text-xl font-sans text-green-400 drop-shadow">Route Manager</div>
+                <div className="logo text-2xl font-extrabold text-white drop-shadow-lg">
+                    Route Manager
+                </div>
             </NavLink>
-            <div className="buttons flex justify-between items-center gap-5">
+
+            {/* Buttons Section */}
+            <div className="buttons flex gap-6">
                 <NavLink to={'/user/auth/login'}>
-                    <div className="btn py-1 px-2 border rounded bg-slate-400 hover:bg-slate-300 cursor-pointer font-bold">Log In</div>
+                    <div className="btn py-2 px-4 rounded-md bg-white text-green-500 font-semibold hover:bg-green-100 hover:text-green-700 transition duration-300">
+                        Log In
+                    </div>
                 </NavLink>
                 <NavLink to={'/user/auth/signup'}>
-                    <div className="btn py-1 px-2 border rounded bg-slate-400 hover:bg-slate-300 cursor-pointer font-bold">Sign Up</div>
+                    <div className="btn py-2 px-4 rounded-md bg-white text-green-500 font-semibold hover:bg-green-100 hover:text-green-700 transition duration-300">
+                        Sign Up
+                    </div>
                 </NavLink>
             </div>
         </div>
