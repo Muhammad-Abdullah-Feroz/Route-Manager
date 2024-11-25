@@ -47,7 +47,7 @@ const Signup = () => {
                     </div>
 
                     <input type="submit" className=' text-black w-20 m-auto mt-4 p-2  border rounded bg-slate-400 hover:bg-slate-300 cursor-pointer font-bold' value="Submit" />
-                <span className='text-right'>Already a user? <NavLink className={"underline text-green-500"} to={'/auth/login'}>Login</NavLink></span>
+                <span className='text-right'>Already a user? <NavLink className={"underline text-green-500"} to={'/user/auth/login'}>Login</NavLink></span>
                 </form>
             </div>
         </div>

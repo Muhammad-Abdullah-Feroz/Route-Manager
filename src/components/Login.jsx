@@ -28,7 +28,7 @@ const Login = () => {
         if (data.username == user.username && data.password == user.password) {
             console.log("Authenticated")
             await wait(2);
-            navigate("/");
+            navigate("/user");
         }
     }
 
@@ -44,11 +44,11 @@ const Login = () => {
                     <input type="text" className=' text-black p-2 rounded' placeholder='John_Doe' {...register("username")} />
                     <div className="flex justify-between">
                         <label htmlFor="username">Password</label>
-                        <span className='text-right'> <NavLink className={"underline text-green-500"} to={'/auth/login/forget'}>Forgot Password?</NavLink></span>
+                        <span className='text-right'> <NavLink className={"underline text-green-500"} to={'/user/auth/forget'}>Forgot Password?</NavLink></span>
                     </div>
                     <input type="password" className=' text-black p-2 rounded' placeholder='•••••' {...register("password")} />
                     <input type="submit" className=' text-black w-20 m-auto mt-4 p-2  border rounded bg-slate-400 hover:bg-slate-300 cursor-pointer font-bold' value="Submit" />
-                    <span className='text-right'>New user? <NavLink className={"underline text-green-500"} to={'/auth/signup'}>Sign Up</NavLink></span>
+                    <span className='text-right'>New user? <NavLink className={"underline text-green-500"} to={'/user/auth/signup'}>Sign Up</NavLink></span>
 
                 </form>
             </div>

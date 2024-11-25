@@ -29,7 +29,7 @@ function App() {
       element: <><Signup /></>
     },
     {
-      path: '/user/auth/forget/:slug',
+      path: '/user/auth/forget',
       element: <><Forget /></>
     },
   ])

@@ -31,7 +31,7 @@ const Main = () => {
     // setRoutes(importedRoutes)
     return (
         <div>
-            <div className="routes fixed flex flex-col gap-1 w-[30vw] bg-green-600 h-[90vh] overflow-y-scroll">
+            <div className="routes fixed flex flex-col gap-1 w-[30vw] border border-green-500 bg-green-600 h-[90vh] overflow-y-scroll">
                 {
                     routes.map((route, index) => {
                         return (
