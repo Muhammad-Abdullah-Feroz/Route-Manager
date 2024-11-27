@@ -1,12 +1,15 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 const AddRouteForm = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
+  const navigate = useNavigate();
 
   const onSubmit = (data) => {
     // Submit the data to API or perform other actions (e.g., adding a new route)
     console.log('New Route Data:', data);
+    navigate("/admin")
   };
 
   return (

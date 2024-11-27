@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams , useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
 const EditRouteForm = () => {
   const { id } = useParams(); // Getting the route id from the URL
   const { register, handleSubmit, setValue } = useForm();
+  const navigate = useNavigate()
   
   // Sample function to simulate fetching route data by ID (replace with API call)
   const fetchRouteData = (id) => {
@@ -27,6 +28,7 @@ const EditRouteForm = () => {
 
   const onSubmit = (data) => {
     console.log('Updated Route:', data);
+    navigate("/admin/")
   };
 
   return (
