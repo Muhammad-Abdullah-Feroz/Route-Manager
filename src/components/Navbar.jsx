@@ -1,7 +1,13 @@
-import React from 'react'
-import { NavLink } from 'react-router-dom'
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 const Navbar = () => {
+    // Replace with dynamic user data
+    const userName = "John Doe";  // Example: replace with the actual user's name
+
+    // Get the first initial of the user's first name
+    const userInitial = userName ? userName.charAt(0).toUpperCase() : '';
+
     return (
         <div className="bg-gradient-to-r from-green-400 to-blue-500 h-16 w-full flex justify-between items-center px-8 shadow-md">
             {/* Logo */}
@@ -11,21 +17,20 @@ const Navbar = () => {
                 </div>
             </NavLink>
 
-            {/* Buttons Section */}
-            <div className="buttons flex gap-6">
-                <NavLink to={'/user/auth/login'}>
-                    <div className="btn py-2 px-4 rounded-md bg-white text-green-500 font-semibold hover:bg-green-100 hover:text-green-700 transition duration-300">
-                        Log In
-                    </div>
-                </NavLink>
-                <NavLink to={'/user/auth/signup'}>
-                    <div className="btn py-2 px-4 rounded-md bg-white text-green-500 font-semibold hover:bg-green-100 hover:text-green-700 transition duration-300">
-                        Sign Up
-                    </div>
-                </NavLink>
+            {/* User Profile Section */}
+            <div className="user-profile flex items-center gap-4">
+                <div
+                    className="w-10 h-10 flex items-center justify-center bg-green-600 text-white rounded-full font-bold"
+                    style={{ fontSize: '18px' }}
+                >
+                    {userInitial}
+                </div>
+                <div className="user-name text-white font-semibold">
+                    {userName}
+                </div>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default Navbar
+export default Navbar;
