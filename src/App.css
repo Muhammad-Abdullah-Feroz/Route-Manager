@@ -8,6 +8,19 @@
   /* color: white; */
 }
 
+@keyframes fadeIn {
+  0% {
+      opacity: 0;
+  }
+  100% {
+      opacity: 1;
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 1s ease-in-out;
+}
+
 /* #root {
   max-width: 1280px;
   margin: 0 auto;
