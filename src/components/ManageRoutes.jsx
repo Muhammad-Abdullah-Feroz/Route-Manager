@@ -114,7 +114,7 @@ const ManageRoutes = () => {
                 <h2 className="text-3xl text-center font-bold text-gray-800 mb-6">
                     Route Management
                 </h2>
-                <NavLink to="/add-route">
+                <NavLink to="/admin/add-route">
                     <button className="bg-blue-600 text-white py-2 px-6 rounded-lg hover:bg-blue-700 transition duration-300 mb-6">
                         Add New Route
                     </button>
