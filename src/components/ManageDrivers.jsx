@@ -1,4 +1,5 @@
 import React from 'react'
+import { BiEditAlt } from 'react-icons/bi';
 
 const ManageDrivers = ({ onAddDriver, onEditDriver }) => {
   const drivers = [
@@ -36,9 +37,9 @@ const ManageDrivers = ({ onAddDriver, onEditDriver }) => {
                           <td className="py-3 px-4 text-center">
                               <button
                                   onClick={() => onEditDriver(driver)}
-                                  className="bg-yellow-500 text-white py-2 px-4 rounded hover:bg-yellow-400 transition duration-300"
+                                  className="bg-yellow-500 flex gap-1 items-center m-auto text-white py-2 px-4 rounded hover:bg-yellow-400 transition duration-300"
                               >
-                                  Edit
+                                  Edit <BiEditAlt className='text-white'/>
                               </button>
                           </td>
                       </tr>

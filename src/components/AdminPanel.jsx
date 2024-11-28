@@ -6,10 +6,14 @@ import ManageRoutes from './ManageRoutes'; // Your ManageRoutes component
 import ManageStops from './ManageStops'; // Your ManageStops component
 import ManageComplaints from './ManageComplaints'; // Your ManageComplaints component
 import ManageDriversContainer from './ManageDriversContainer';
+import { IoLogOutOutline } from 'react-icons/io5';
+import { IoMdLogOut } from 'react-icons/io';
+import { MdLogout } from 'react-icons/md';
+import { BiLogOut, BiSolidLogOut } from 'react-icons/bi';
 
 const AdminPanel = () => {
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-    const [showModal, setShowModal] = useState(true);
+    const [isAuthenticated, setIsAuthenticated] = useState(true);
+    const [showModal, setShowModal] = useState(false);
     const [selectedView, setSelectedView] = useState(''); // state to track selected view
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const [errorMessage, setErrorMessage] = useState('');
@@ -76,22 +80,22 @@ const AdminPanel = () => {
 
             {/* Admin Panel */}
             {isAuthenticated && (
-                <div className="h-screen flex flex-col bg-gray-100">
+                <div className="h-screen overflow-hidden flex flex-col bg-gray-100">
                     {/* Navbar */}
                     <header className="bg-blue-600 text-white py-4 px-6 flex justify-between items-center">
                         <h1 className="text-2xl font-semibold">Admin Panel</h1>
                         <nav className="flex space-x-4">
                             <button
-                                className="bg-white font-bold text-blue-600 border-2 border-blue-600 py-2 px-4 rounded-lg hover:bg-blue-500 hover:text-white transition duration-300 ease-in-out transform hover:scale-105" 
+                                className="flex items-center gap-1 bg-white font-bold text-blue-600 border-2 border-blue-600 py-2 px-4 rounded-lg hover:bg-blue-500 hover:text-white transition duration-300 ease-in-out transform hover:scale-105" 
                                 onClick={() => navigate("/")}
                             >
-                                Logout
+                                <BiLogOut/>Logout
                             </button>
                         </nav>
                     </header>
 
                     {/* Main Content */}
-                    <div className="flex flex-1">
+                    <div className="flex flex-1 overflow-x-auto">
                         {/* Sidebar */}
                         <aside className="w-64 bg-gradient-to-b from-blue-800 via-blue-600 to-blue-600 text-white h-full">
                             <nav className="mt-4">

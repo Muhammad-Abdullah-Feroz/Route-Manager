@@ -10,6 +10,7 @@ import Complaint from './components/complaint'
 import AdminPanel from './components/AdminPanel'
 import EditRouteForm from './components/EditRouteForm'
 import AddRouteForm from './components/AddRouteForm'
+import AddStopForm from './components/AddStopForm'
 
 function App() {
   const router = createBrowserRouter([
@@ -24,6 +25,10 @@ function App() {
     {
       path: '/admin/add-route',
       element: <><AddRouteForm /></>
+    },
+    {
+      path: '/admin/add-stop',
+      element: <><AddStopForm /></>
     },
     {
       path: '/admin/edit/:id',

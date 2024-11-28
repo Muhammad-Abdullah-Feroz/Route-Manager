@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import AddRouteForm from './AddRouteForm';
 import EditRouteForm from './EditRouteForm';
+import { BiEditAlt } from 'react-icons/bi';
 
 // Route Management Component
 const ManageRoutes = () => {
@@ -168,9 +169,9 @@ const ManageRoutes = () => {
                                     <td className="py-3 px-4 text-center">
                                         <button
                                             onClick={() => handleEdit(route)}
-                                            className="bg-yellow-500 text-white py-2 px-4 rounded hover:bg-yellow-400 transition duration-300"
+                                            className="bg-yellow-500 flex gap-1 items-center m-auto text-white py-2 px-4 rounded hover:bg-yellow-400 transition duration-300"
                                         >
-                                            Edit
+                                            Edit <BiEditAlt className='text-white'/>
                                         </button>
                                     </td>
                                 </tr>

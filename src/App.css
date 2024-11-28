@@ -1,6 +1,8 @@
 *{
   margin: 0;
   padding: 0;
+  outline: none;
+  box-sizing: border-box;
 }
 
 .text-border {
@@ -65,3 +67,21 @@
 .read-the-docs {
   color: #888;
 } */
+
+
+
+
+
+/* add css for the loader in add stop searching component */
+.dot_pulse {
+  width: 8px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  animation: l5 1s infinite linear alternate;
+}
+@keyframes l5 {
+    0%  {box-shadow: 15px 0 rgb(80, 80, 254), -15px 0 #0002;background: rgb(80, 80, 254) }
+    33% {box-shadow: 15px 0 rgb(80, 80, 254), -15px 0 #0002;background: #0002}
+    66% {box-shadow: 15px 0 #0002,-15px 0 rgb(80, 80, 254); background: #0002}
+    100%{box-shadow: 15px 0 #0002,-15px 0 rgb(80, 80, 254); background: rgb(80, 80, 254) }
+}

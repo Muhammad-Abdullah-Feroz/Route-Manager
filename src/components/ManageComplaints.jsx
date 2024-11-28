@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-
+import { BiEdit, BiEditAlt } from 'react-icons/bi';
+import { CiFilter } from "react-icons/ci";
+import { FaEdit, FaSearch, FaUserEdit } from 'react-icons/fa';
+import { FaRegEdit } from "react-icons/fa";
+import { FcDeleteRow } from 'react-icons/fc';
+import { MdDelete, MdDeleteOutline } from 'react-icons/md';
+import { RxDot } from 'react-icons/rx';
 const ManageComplaint = () => {
 	const [complaints, setComplaints] = useState([
 		{ id: 1, studentName: 'John Doe', description: 'Bus not arriving on time.', status: 'Pending', date: '2024-11-20' },
@@ -54,23 +60,31 @@ const ManageComplaint = () => {
 					<EditComplaint complaint={selectedComplaint} onSave={handleSave} onBack={handleBack} />
 				) : (
 					<div>
-						<div className="flex justify-between mb-4">
+						<div className=" flex justify-between mb-4">
+							<div className='relative w-1/3'>
+
 							<input
 								type="text"
 								placeholder="Search complaints..."
 								value={search}
 								onChange={(e) => setSearch(e.target.value)}
-								className="p-2 border border-gray-300 rounded w-1/3"
-							/>
+								className="p-2 border outline-none font-semibold text-gray-500 border-gray-300 focus:ring-2 focus:ring-gray-100 rounded w-full"
+								/>
+								<span className='absolute right-[11px] top-[11px]'> <FaSearch className='text-gray-300 h-5 w-5 '/></span>
+								</div>
+							<div className='flex items-center gap-2'>
+							<p className='text-md font-semibold flex items-center gap-1'><CiFilter/>filter </p>
+							
 							<select
 								value={filter}
 								onChange={(e) => setFilter(e.target.value)}
-								className="p-2 border border-gray-300 rounded"
-							>
+								className="p-2 border border-gray-300 focus:ring-2 focus:ring-gray-100 cursor-pointer outline-none rounded"
+								>
 								<option value="All">All</option>
 								<option value="Pending">Pending</option>
 								<option value="Resolved">Resolved</option>
 							</select>
+								</div>
 						</div>
 						<table className="w-full table-auto border-collapse">
 							<thead className="text-lg">
@@ -92,20 +106,21 @@ const ManageComplaint = () => {
 										<td className="py-3 px-4 text-center">{complaint.id}</td>
 										<td className="py-3 px-4 ">{complaint.studentName}</td>
 										<td className="py-3 px-4 ">{complaint.description}</td>
-										<td className="py-3 px-4 text-center">{complaint.status}</td>
+										<td className="py-3 px-4 text-center">{complaint.status.toLowerCase()=='pending'?
+											<span class="bg-red-100 text-red-900 text-xs font-medium me-2 px-2.5 py-0.5 rounded  border border-red-800">pending</span>:<span class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded border border-blue-800">resolved</span>}</td>
 										<td className="py-3 px-4 text-center">{complaint.date}</td>
 										<td className="py-3 px-4 text-center flex justify-center space-x-2">
 											<button
 												onClick={() => handleEdit(complaint.id)}
-												className="bg-yellow-500 text-white py-2 px-4 rounded hover:bg-yellow-400 transition duration-300"
+												className="bg-yellow-500 flex gap-1 items-center text-white py-2 px-4 rounded hover:bg-yellow-400 transition duration-300"
 											>
-												Edit
+												Edit <BiEditAlt className='text-white'/>
 											</button>
 											<button
 												onClick={() => handleDelete(complaint.id)}
-												className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-400 transition duration-300"
+												className="bg-red-500 flex gap-1 items-center text-white py-2 px-4 rounded hover:bg-red-400 transition duration-300"
 											>
-												Delete
+												Delete <MdDeleteOutline className='text-white'/>
 											</button>
 										</td>
 									</tr>
