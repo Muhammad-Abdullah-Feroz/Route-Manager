@@ -22,7 +22,7 @@ const ManageDriversContainer = () => {
     };
 
     return (
-        <div className="p-8 bg-gray-100 min-h-screen">
+        <div className="p-8 bg-gray-100">
             {currentView === 'list' && (
                 <ManageDrivers onAddDriver={handleAddDriver} onEditDriver={handleEditDriver} />
             )}
