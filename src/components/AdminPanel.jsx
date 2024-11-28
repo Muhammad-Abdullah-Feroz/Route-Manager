@@ -92,7 +92,7 @@ const AdminPanel = () => {
                     {/* Main Content */}
                     <div className="flex flex-1">
                         {/* Sidebar */}
-                        <aside className="w-64 bg-gradient-to-b from-blue-800 to-blue-600 text-white h-full">
+                        <aside className="w-64 bg-gradient-to-b from-blue-800 via-blue-600 to-blue-600 text-white h-full">
                             <nav className="mt-4">
                                 <ul>
                                     <li onClick={() => handleSidebarClick('manage-routes')} className="cursor-pointer p-3 hover:bg-blue-700 border-b-2 border-gray-500">
