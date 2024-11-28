@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { NavLink, useNavigate } from 'react-router-dom';
 import ManageRoutes from './ManageRoutes'; // Your ManageRoutes component
-import ManageDrivers from './ManageDrivers'; // Your ManageDrivers component
+// import ManageDrivers from './ManageDrivers'; // Your ManageDrivers component
 import ManageStops from './ManageStops'; // Your ManageStops component
 import ManageComplaints from './ManageComplaints'; // Your ManageComplaints component
+import ManageDriversContainer from './ManageDriversContainer';
 
 const AdminPanel = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -92,7 +93,7 @@ const AdminPanel = () => {
                     {/* Main Content */}
                     <div className="flex flex-1">
                         {/* Sidebar */}
-                        <aside className="w-64 bg-gradient-to-b from-blue-800 to-blue-600 text-white h-full">
+                        <aside className="w-64 bg-gradient-to-b from-blue-800 via-blue-600 to-blue-600 text-white h-full">
                             <nav className="mt-4">
                                 <ul>
                                     <li onClick={() => handleSidebarClick('manage-routes')} className="cursor-pointer p-3 hover:bg-blue-700 border-b-2 border-gray-500">
@@ -120,10 +121,10 @@ const AdminPanel = () => {
                         </aside>
 
                         {/* Dashboard Content */}
-                        <main className="flex-1 p-6 overflow-y-auto">
+                        <main className="flex-1 p-6 bg-gray-100 overflow-y-auto">
                             {/* Conditionally render content based on selected view */}
                             {selectedView === 'manage-routes' && <ManageRoutes />}
-                            {selectedView === 'manage-drivers' && <ManageDrivers />}
+                            {selectedView === 'manage-drivers' && <ManageDriversContainer />}
                             {selectedView === 'manage-stops' && <ManageStops />}
                             {selectedView === 'manage-complaints' && <ManageComplaints />}
                         </main>

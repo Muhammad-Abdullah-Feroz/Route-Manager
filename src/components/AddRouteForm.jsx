@@ -2,14 +2,15 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
-const AddRouteForm = () => {
+const AddRouteForm = ({ onBack }) => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const navigate = useNavigate();
 
   const onSubmit = (data) => {
     // Submit the data to API or perform other actions (e.g., adding a new route)
     console.log('New Route Data:', data);
-    navigate("/admin")
+    // navigate("/admin")
+    onBack();
   };
 
   return (
@@ -26,7 +27,7 @@ const AddRouteForm = () => {
             />
             {errors.routeNumber && <p className="text-red-500 text-sm mt-1">{errors.routeNumber.message}</p>}
           </div>
-          
+
           <div className="mb-4">
             <label className="block text-lg font-semibold mb-2">Driver Name</label>
             <input
@@ -58,12 +59,21 @@ const AddRouteForm = () => {
             {errors.stops && <p className="text-red-500 text-sm mt-1">{errors.stops.message}</p>}
           </div>
 
-          <button
-            type="submit"
-            className="bg-blue-600 text-white py-2 px-6 rounded-lg hover:bg-blue-700 transition duration-300"
-          >
-            Add Route
-          </button>
+          <div className="flex items-center justify-between">
+            <button
+              type="button"
+              onClick={onBack}
+              className="bg-gray-500 text-white py-2 px-4 rounded mr-4"
+            >
+              Back
+            </button>
+            <button
+              type="submit"
+              className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-300"
+            >
+              Save
+            </button>
+          </div>
         </form>
       </div>
     </div>
