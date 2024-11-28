@@ -121,7 +121,7 @@ const AdminPanel = () => {
                         </aside>
 
                         {/* Dashboard Content */}
-                        <main className="flex-1 p-6 overflow-y-auto">
+                        <main className="flex-1 p-6 bg-gray-100 overflow-y-auto">
                             {/* Conditionally render content based on selected view */}
                             {selectedView === 'manage-routes' && <ManageRoutes />}
                             {selectedView === 'manage-drivers' && <ManageDriversContainer />}
