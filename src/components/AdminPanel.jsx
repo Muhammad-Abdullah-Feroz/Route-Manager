@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { NavLink, useNavigate } from 'react-router-dom';
 import ManageRoutes from './ManageRoutes'; // Your ManageRoutes component
-import ManageDrivers from './ManageDrivers'; // Your ManageDrivers component
+// import ManageDrivers from './ManageDrivers'; // Your ManageDrivers component
 import ManageStops from './ManageStops'; // Your ManageStops component
 import ManageComplaints from './ManageComplaints'; // Your ManageComplaints component
+import ManageDriversContainer from './ManageDriversContainer';
 
 const AdminPanel = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -123,7 +124,7 @@ const AdminPanel = () => {
                         <main className="flex-1 p-6 overflow-y-auto">
                             {/* Conditionally render content based on selected view */}
                             {selectedView === 'manage-routes' && <ManageRoutes />}
-                            {selectedView === 'manage-drivers' && <ManageDrivers />}
+                            {selectedView === 'manage-drivers' && <ManageDriversContainer />}
                             {selectedView === 'manage-stops' && <ManageStops />}
                             {selectedView === 'manage-complaints' && <ManageComplaints />}
                         </main>
