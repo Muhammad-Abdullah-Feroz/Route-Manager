@@ -130,17 +130,7 @@ const ManageRoutes = () => {
     // Rendered Content based on `activeComponent`
     return (
         <div className="p-8 bg-gray-100 min-h-screen">
-            {activeComponent === 'list' && (
-                <div className="bg-white rounded-lg shadow-md p-6">
-                    <h2 className="text-3xl text-center font-bold text-gray-800 mb-6">
-                        Route Management
-                    </h2>
-                    <button
-                        onClick={handleAdd}
-                        className="bg-blue-600 text-white py-2 px-6 rounded-lg hover:bg-blue-700 transition duration-300 mb-6"
-                    >
-                        Add New Route
-                    </button>
+                    
                     <table className="w-full table-auto border-collapse">
                         <thead className="text-lg">
                             <tr className="bg-blue-600 text-white">
