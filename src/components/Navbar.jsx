@@ -9,7 +9,7 @@ const Navbar = () => {
     const userInitial = userName ? userName.charAt(0).toUpperCase() : '';
 
     return (
-        <div className="bg-gradient-to-r from-green-400 to-blue-500 h-16 w-full flex justify-between items-center px-8 shadow-md">
+        <div className="bg-blue-600 w-full flex justify-between items-center py-3 px-8 shadow-md">
             {/* Logo */}
             <NavLink to={'/user'}>
                 <div className="logo text-2xl font-extrabold text-white drop-shadow-lg">
@@ -20,12 +20,12 @@ const Navbar = () => {
             {/* User Profile Section */}
             <div className="user-profile flex items-center gap-4">
                 <div
-                    className="w-10 h-10 flex items-center justify-center bg-green-600 text-white rounded-full font-bold"
-                    style={{ fontSize: '18px' }}
+                    className="w-12 h-12 flex items-center justify-center bg-green-600 text-white rounded-full font-bold"
+                    style={{ fontSize: '24px' }}
                 >
                     {userInitial}
                 </div>
-                <div className="user-name text-white font-semibold">
+                <div className="user-name text-white text-lg font-semibold">
                     {userName}
                 </div>
             </div>
