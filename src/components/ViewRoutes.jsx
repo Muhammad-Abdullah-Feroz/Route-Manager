@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 // Sample Route Data (Dummy Data)
 const routeData = [
   {
-    routeNo: "101",
+    routeNo: "01",
     driver: "John Doe",
     busNo: "B123",
     stops: ["Stop A", "Stop B", "Stop C"],
@@ -11,15 +11,79 @@ const routeData = [
     currentStop: "Stop A",
   },
   {
-    routeNo: "102",
+    routeNo: "02",
     driver: "Jane Smith",
     busNo: "B456",
     stops: ["Stop D", "Stop E", "Stop F"],
     schedule: "8:00 AM - 4:00 PM",
     currentStop: "Stop D",
   },
-  // Add more routes as needed
+  {
+    routeNo: "03",
+    driver: "Alice Johnson",
+    busNo: "B789",
+    stops: ["Stop G", "Stop H", "Stop I"],
+    schedule: "7:00 AM - 3:00 PM",
+    currentStop: "Stop G",
+  },
+  {
+    routeNo: "04",
+    driver: "Bob Brown",
+    busNo: "B101",
+    stops: ["Stop J", "Stop K", "Stop L"],
+    schedule: "10:00 AM - 6:00 PM",
+    currentStop: "Stop J",
+  },
+  {
+    routeNo: "05",
+    driver: "Charlie Lee",
+    busNo: "B202",
+    stops: ["Stop M", "Stop N", "Stop O"],
+    schedule: "6:00 AM - 2:00 PM",
+    currentStop: "Stop M",
+  },
+  {
+    routeNo: "06",
+    driver: "David King",
+    busNo: "B303",
+    stops: ["Stop P", "Stop Q", "Stop R"],
+    schedule: "7:30 AM - 4:30 PM",
+    currentStop: "Stop P",
+  },
+  {
+    routeNo: "07",
+    driver: "Emily Clark",
+    busNo: "B404",
+    stops: ["Stop S", "Stop T", "Stop U"],
+    schedule: "8:30 AM - 5:30 PM",
+    currentStop: "Stop S",
+  },
+  {
+    routeNo: "08",
+    driver: "Frank White",
+    busNo: "B505",
+    stops: ["Stop V", "Stop W", "Stop X"],
+    schedule: "9:00 AM - 5:00 PM",
+    currentStop: "Stop V",
+  },
+  {
+    routeNo: "09",
+    driver: "Grace Green",
+    busNo: "B606",
+    stops: ["Stop Y", "Stop Z", "Stop A1"],
+    schedule: "10:00 AM - 6:00 PM",
+    currentStop: "Stop Y",
+  },
+  {
+    routeNo: "10",
+    driver: "Henry Blue",
+    busNo: "B707",
+    stops: ["Stop B1", "Stop C1", "Stop D1"],
+    schedule: "6:30 AM - 2:30 PM",
+    currentStop: "Stop B1",
+  },
 ];
+
 
 const RouteDetails = () => {
   const [expandedRoute, setExpandedRoute] = useState(null);
