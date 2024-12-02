@@ -6,10 +6,12 @@ import ManageRoutes from './ManageRoutes'; // Your ManageRoutes component
 import ManageStops from './ManageStops'; // Your ManageStops component
 import ManageComplaints from './ManageComplaints'; // Your ManageComplaints component
 import ManageDriversContainer from './ManageDriversContainer';
-import { IoLogOutOutline } from 'react-icons/io5';
+import { IoBusOutline, IoLogOutOutline } from 'react-icons/io5';
 import { IoMdLogOut } from 'react-icons/io';
-import { MdLogout } from 'react-icons/md';
+import { MdLogout, MdOutlineManageHistory } from 'react-icons/md';
 import { BiLogOut, BiSolidLogOut } from 'react-icons/bi';
+import { FaPerson } from 'react-icons/fa6';
+import { BsStoplights } from 'react-icons/bs';
 
 const AdminPanel = () => {
     const [isAuthenticated, setIsAuthenticated] = useState(true);
@@ -101,23 +103,23 @@ const AdminPanel = () => {
                             <nav className="mt-4">
                                 <ul>
                                     <li onClick={() => handleSidebarClick('manage-routes')} className="cursor-pointer p-3 hover:bg-blue-700 border-b-2 border-gray-500">
-                                        <button className="block">
-                                            Manage Routes
+                                        <button className="flex items-center gap-2 py-2">
+                                        <IoBusOutline /> Manage Routes
                                         </button>
                                     </li>
                                     <li onClick={() => handleSidebarClick('manage-drivers')} className="cursor-pointer p-3 hover:bg-blue-700 border-b-2 border-gray-500">
-                                        <button className="block">
-                                            Manage Drivers
+                                        <button className="flex items-center gap-2 py-2">
+                                        <FaPerson /> Manage Drivers
                                         </button>
                                     </li>
                                     <li onClick={() => handleSidebarClick('manage-stops')} className="cursor-pointer p-3 hover:bg-blue-700 border-b-2 border-gray-500">
-                                        <button className="block">
-                                            Manage Stops
+                                        <button className="flex items-center gap-2 py-2">
+                                        <BsStoplights />  Manage Stops
                                         </button>
                                     </li>
                                     <li onClick={() => handleSidebarClick('manage-complaints')} className="cursor-pointer p-3 hover:bg-blue-700 border-b-2 border-gray-500">
-                                        <button className="block">
-                                            Manage Complaints
+                                        <button className="flex items-center gap-2 py-2">
+                                        <MdOutlineManageHistory /> Manage Complaints
                                         </button>
                                     </li>
                                 </ul>

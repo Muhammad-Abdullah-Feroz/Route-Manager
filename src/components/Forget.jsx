@@ -75,7 +75,7 @@ const Forget = () => {
                                     className={`w-full p-3 rounded-lg border ${
                                         errors.email
                                             ? 'border-red-500 focus:ring-red-400'
-                                            : 'border-gray-300 focus:ring-green-400'
+                                            : 'border-gray-300 focus:ring-blue-500'
                                     } focus:ring-2 outline-none`}
                                     {...register('email', {
                                         required: 'Email is required.',
@@ -95,8 +95,8 @@ const Forget = () => {
                             {/* Submit Button */}
                             <button
                                 type="submit"
-                                className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 rounded-lg transition duration-300"
-                            >
+                                className='w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-500 transition duration-300 ease-in-out transform hover:scale-105'
+                                >
                                 Reset Password
                             </button>
                         </>
@@ -117,7 +117,7 @@ const Forget = () => {
                                     className={`w-full p-3 rounded-lg border ${
                                         errors.newPassword
                                             ? 'border-red-500 focus:ring-red-400'
-                                            : 'border-gray-300 focus:ring-green-400'
+                                            : 'border-gray-300 focus:ring-blue-600'
                                     } focus:ring-2 outline-none`}
                                     {...register('newPassword', {
                                         required: 'New password is required.',
@@ -149,7 +149,7 @@ const Forget = () => {
                                     className={`w-full p-3 rounded-lg border ${
                                         errors.confirmPassword
                                             ? 'border-red-500 focus:ring-red-400'
-                                            : 'border-gray-300 focus:ring-green-400'
+                                            : 'border-gray-300 focus:ring-blue-600'
                                     } focus:ring-2 outline-none`}
                                     {...register('confirmPassword', {
                                         required: 'Please confirm your password.',
@@ -165,8 +165,8 @@ const Forget = () => {
                             {/* Submit Button */}
                             <button
                                 type="submit"
-                                className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-3 rounded-lg transition duration-300"
-                            >
+                                className='w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-500 transition duration-300 ease-in-out transform hover:scale-105'
+                                >
                                 Update Password
                             </button>
                         </>
@@ -178,7 +178,7 @@ const Forget = () => {
                         New user?{' '}
                         <NavLink
                             to="/user/auth/signup"
-                            className="text-green-500 hover:underline"
+                            className="text-blue-600 hover:underline"
                         >
                             Sign Up
                         </NavLink>

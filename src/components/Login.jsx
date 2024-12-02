@@ -40,7 +40,7 @@ const Login = () => {
 
             {/* Form Container */}
             <div className="relative z-10 w-96 p-8 bg-white/70 backdrop-blur-lg rounded-3xl shadow-lg">
-                <h2 className="text-3xl font-bold text-center text-green-500 mb-8">Login to your account</h2>
+                <h2 className="text-2xl font-bold text-center text-gray-700 mb-8">Login to your account</h2>
 
                 {/* Login Form */}
                 <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
@@ -75,21 +75,21 @@ const Login = () => {
 
                     {/* Forgot Password Link */}
                     <div className="flex justify-between items-center">
-                        <NavLink to="/user/auth/forget" className="text-sm text-green-500 hover:underline">Forgot Password?</NavLink>
+                        <NavLink to="/user/auth/forget" className="text-sm text-blue-600 hover:underline">Forgot Password?</NavLink>
                     </div>
 
                     {/* Submit Button */}
                     <button
                         type="submit"
-                        className="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-400 transition duration-300"
-                    >
+                        className='w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-500 transition duration-300 ease-in-out transform hover:scale-105'
+                     >
                         Log In
                     </button>
 
                     {/* Sign Up Link */}
                     <div className="mt-4 text-center">
                         <span className="text-sm text-gray-700">New user? </span>
-                        <NavLink to="/user/auth/signup" className="text-sm text-green-500 hover:underline">Sign Up</NavLink>
+                        <NavLink to="/user/auth/signup" className="text-sm text-blue-600 hover:underline">Sign Up</NavLink>
                     </div>
                 </form>
             </div>

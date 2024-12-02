@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
+import { AiOutlineFileDone } from 'react-icons/ai';
 import { BiEdit, BiEditAlt } from 'react-icons/bi';
 import { CiFilter } from "react-icons/ci";
 import { FaEdit, FaSearch, FaUserEdit } from 'react-icons/fa';
 import { FaRegEdit } from "react-icons/fa";
 import { FcDeleteRow } from 'react-icons/fc';
-import { MdDelete, MdDeleteOutline } from 'react-icons/md';
+import { MdDelete, MdDeleteOutline, MdPendingActions } from 'react-icons/md';
 import { RxDot } from 'react-icons/rx';
 const ManageComplaint = () => {
 	const [complaints, setComplaints] = useState([
@@ -107,7 +108,7 @@ const ManageComplaint = () => {
 										<td className="py-3 px-4 ">{complaint.studentName}</td>
 										<td className="py-3 px-4 ">{complaint.description}</td>
 										<td className="py-3 px-4 text-center">{complaint.status.toLowerCase()=='pending'?
-											<span class="bg-red-100 text-red-900 text-xs font-medium me-2 px-2.5 py-0.5 rounded  border border-red-800">pending</span>:<span class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded border border-blue-800">resolved</span>}</td>
+											<span class="bg-red-100 text-red-900 text-xs font-medium me-2 px-2  py-0.5 rounded  border border-red-800 flex gap-1 items-center"><MdPendingActions     />pending</span>:<span class="bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2 py-0.5 rounded border border-blue-800 flex gap-1 items-center"><AiOutlineFileDone />resolved</span>}</td>
 										<td className="py-3 px-4 text-center">{complaint.date}</td>
 										<td className="py-3 px-4 text-center flex justify-center space-x-2">
 											<button

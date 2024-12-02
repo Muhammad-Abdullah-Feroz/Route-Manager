@@ -5,13 +5,13 @@ import Navbar from './components/Navbar'
 import Login from './components/Login'
 import Signup from './components/Signup'
 import Forget from './components/Forget'
-import Main from './components/Main'
 import Complaint from './components/LogComplaint'
 import AdminPanel from './components/AdminPanel'
 import EditRouteForm from './components/EditRouteForm'
 import AddRouteForm from './components/AddRouteForm'
 import AddStopForm from './components/AddStopForm'
 import UserPanel from './components/UserPanel'
+import { ToastContainer } from 'react-toastify'
 
 function App() {
   const router = createBrowserRouter([
@@ -63,6 +63,7 @@ function App() {
   return (
     <>
       <RouterProvider router={router} />
+      <ToastContainer/>
     </>
   )
 }

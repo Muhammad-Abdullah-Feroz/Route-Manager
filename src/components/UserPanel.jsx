@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
-import { BiLogOut } from 'react-icons/bi';
+import { BiLogOut, BiMessageSquareError } from 'react-icons/bi';
 import { useNavigate } from 'react-router-dom';
 import UserDashboard from './UserDashboard';
 import ViewRoutes from './ViewRoutes';
 import LogComplaint from './LogComplaint';
 import Profile from './Profile';
 import Navbar from './Navbar';
+import { AiOutlineDashboard } from 'react-icons/ai';
+import { MdOutlineDirectionsBus } from 'react-icons/md';
+import { BsPerson } from 'react-icons/bs';
 
 const UserPanel = () => {
   const [selectedView, setSelectedView] = useState('dashboard'); // Default view is Dashboard
@@ -23,7 +26,7 @@ const UserPanel = () => {
   
 
   // Replace with dynamic user data
-  const userName = "John Doe";  // Example: replace with the actual user's name
+  const userName = "Mehboob  Alam";  // Example: replace with the actual user's name
   const userInitial = userName ? userName.charAt(0).toUpperCase() : ''; // Get the first initial of the user's name
 
   return (
@@ -38,16 +41,16 @@ const UserPanel = () => {
           <nav className="mt-4">
             <ul>
               <li onClick={() => handleSidebarClick('dashboard')} className="cursor-pointer p-3 hover:bg-blue-700 border-b-2 border-gray-500">
-                <button className="block">Dashboard</button>
+                <button className="flex items-center my-2 gap-2"><AiOutlineDashboard/>Dashboard</button>
               </li>
               <li onClick={() => handleSidebarClick('routes')} className="cursor-pointer p-3 hover:bg-blue-700 border-b-2 border-gray-500">
-                <button className="block">View Routes</button>
+                <button className="flex items-center my-2 gap-2">  <MdOutlineDirectionsBus  />View Routes</button>
               </li>
               <li onClick={() => handleSidebarClick('logComplaint')} className="cursor-pointer p-3 hover:bg-blue-700 border-b-2 border-gray-500">
-                <button className="block">Log Complaint</button>
+                <button className="flex items-center my-2 gap-2"><BiMessageSquareError  /> Complaint</button>
               </li>
               <li onClick={() => handleSidebarClick('profile')} className="cursor-pointer p-3 hover:bg-blue-700 border-b-2 border-gray-500">
-                <button className="block">Profile</button>
+                <button className="flex items-center my-2 gap-2"><BsPerson />Profile</button>
               </li>
               <li onClick={()=>handleLogout()} className="cursor-pointer p-3 hover:bg-blue-700 border-b-2 border-gray-500">
                 <button className="flex items-center gap-2">
