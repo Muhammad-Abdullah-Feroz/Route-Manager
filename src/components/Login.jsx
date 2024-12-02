@@ -36,7 +36,7 @@ const Login = () => {
         reset()
         console.log(LogIndata)
         try{
-            const response=await axios.post(`${import.meta.env.VITE_LOCAL_BACKEND_URL}/api/user/login`,LogIndata)
+            const response=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/user/login`,LogIndata)
             console.log(response.data)
             if(response.data.success){
                 localStorage.setItem('token',response.data.token)

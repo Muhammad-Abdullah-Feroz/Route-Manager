@@ -12,7 +12,7 @@ const EmailVerification = () => {
   useEffect(() => {
     const verifyEmail = async () => {
       try {
-        const response = await axios.get(`${import.meta.env.VITE_LOCAL_BACKEND_URL}/api/user/verify/${slug}`);
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/user/verify/${slug}`);
         setVerificationStatus(response.data.success);
       } catch (error) {
         setVerificationStatus(false);
