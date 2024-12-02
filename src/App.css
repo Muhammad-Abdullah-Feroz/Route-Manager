@@ -3,6 +3,10 @@
   padding: 0;
   outline: none;
   box-sizing: border-box;
+
+}
+html{
+  overflow-x: hidden;
 }
 
 .text-border {
@@ -84,4 +88,21 @@
     33% {box-shadow: 15px 0 rgb(80, 80, 254), -15px 0 #0002;background: #0002}
     66% {box-shadow: 15px 0 #0002,-15px 0 rgb(80, 80, 254); background: #0002}
     100%{box-shadow: 15px 0 #0002,-15px 0 rgb(80, 80, 254); background: rgb(80, 80, 254) }
+}
+
+
+
+
+.loader {
+  border-top-color: #3498db;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

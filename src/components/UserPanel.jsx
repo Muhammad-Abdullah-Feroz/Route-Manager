@@ -20,14 +20,12 @@ const UserPanel = () => {
 
   const handleLogout = () => {
     if (window.confirm("Are you sure you want to logout ?")){
-        navigate("auth/login");
+      localStorage.removeItem('token');  
+      navigate("/user/auth/login");
     }
   }
   
 
-  // Replace with dynamic user data
-  const userName = "Mehboob  Alam";  // Example: replace with the actual user's name
-  const userInitial = userName ? userName.charAt(0).toUpperCase() : ''; // Get the first initial of the user's name
 
   return (
     <div className="h-screen overflow-hidden flex flex-col bg-gray-100">
@@ -64,7 +62,7 @@ const UserPanel = () => {
         {/* Dashboard Content */}
         <main className="flex-1 p-6 bg-gray-100 overflow-y-auto">
           {/* Conditionally render content based on selected view */}
-          {selectedView === 'dashboard' && <UserDashboard userName = {userName} />}
+          {selectedView === 'dashboard' && <UserDashboard  />}
           {selectedView === 'routes' && <ViewRoutes />}
           {selectedView === 'logComplaint' && <LogComplaint />}
           {selectedView === 'profile' && <Profile />}

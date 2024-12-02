@@ -1,13 +1,13 @@
 import React from 'react';
 import { FaBus, FaRegClock, FaMapMarkedAlt, FaExclamationTriangle } from 'react-icons/fa';
 
-const Dashboard = ({ userName }) => {
+const Dashboard = () => {
   return (
-    <div className="h-screen bg-gradient-to-r from-blue-500 via-blue-400 to-blue-300 text-white">
+    <div className="h-screen bg-gradient-to-r from-blue-500 via-blue-400 to-blue-300 text-white overflow-x-hidden">
       <div className="flex flex-col justify-center items-center h-full py-10">
         {/* Welcome Message */}
         <div className="text-center">
-          <h2 className="text-4xl font-extrabold mb-4">Welcome, {userName}!</h2>
+          <h2 className="text-4xl font-extrabold mb-4">Welcome here</h2>
           <p className="text-xl mb-6">We’re glad to have you on board. Here's a quick guide to how the app works</p>
         </div>
 

@@ -2,28 +2,57 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { NavLink } from "react-router-dom";
 import bgImage from "../assets/img1.jpg";
-import { messageToast } from "../handlers/messageToast";
+import { messageToast, messageToastError } from "../handlers/messageToast";
+import axios from "axios";
+import Bttn from "./Bttn";
 
 const Signup = () => {
-  const [fadeIn, setFadeIn] = useState(false); // State to control fade-in effect
+  const [loadingBtn, setLoadingBtn] = useState(false); 
   const {
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors },
   } = useForm();
 
-  useEffect(() => {
-    // Trigger fade-in after component mount
-    setFadeIn(true);
-  }, []);
+ 
 
-  const onSubmit = (data) => {
-    const signBtn=document.getElementById("signUpBtn");
-    signBtn.disabled=true;
-
-    console.log(data);
-    messageToast("User registered successfully");
+  const onSubmit = async (data) => {
+  setLoadingBtn(true);
+    const RegisterData = {
+      name: data.fullName,
+      email: data.email,
+      password: data.password,
+      phone_no: data.phone_no,
+      address: data.address,
+    };
+    await axios
+      .post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/user/register`,
+        RegisterData
+      )
+      .then((res) => {
+        reset();
+        setLoadingBtn(false);
+        console.log(res);
+        const response = res.data;
+        if (response.success) {
+          messageToast(response.msg + "👌");
+        } else {
+          messageToast(response.msg + "👎");
+        }
+      })
+      .catch((err) => {
+        setLoadingBtn(false);
+        console.log(err);
+        
+        if (err.response.status === 400) {
+          messageToastError(err.response.data.msg + "👎");
+        } else {
+          messageToastError("Internel error occur🤯");
+        }
+      });
   };
 
   return (
@@ -40,10 +69,11 @@ const Signup = () => {
       {/* Form Container */}
       <div className="  z-10 w-full md:w-1/2 h-full flex justify-center items-center px-6">
         <form
-          className={`flex flex-col w-full max-w-lg gap-4 p-6 bg-white/70 backdrop-blur-lg border border-white/20 rounded-xl shadow-lg transition-all duration-1000 ease-in-out ${
-            fadeIn ? "opacity-100" : "opacity-0"
-          }`}
+          className={`flex flex-col w-full max-w-lg gap-4 p-6 bg-white/70 backdrop-blur-lg border border-white/20 rounded-xl shadow-lg transition-all duration-1000 ease-in-out 
+          opacity-90
+          `}
           onSubmit={handleSubmit(onSubmit)}
+          id="UsersignupForm"
         >
           <h2 className="text-2xl text-center font-bold text-gray-700 mb-2">
             Sign Up
@@ -53,7 +83,7 @@ const Signup = () => {
           <div className="flex flex-col">
             <label
               htmlFor="fullName"
-              className="text-lg font-semibold text-gray-600"
+              className="text-md font-semibold text-gray-600"
             >
               Full Name
             </label>
@@ -74,7 +104,7 @@ const Signup = () => {
           <div className="flex flex-col">
             <label
               htmlFor="phone_no"
-              className="text-lg font-semibold text-gray-600"
+              className="text-md font-semibold text-gray-600"
             >
               Phone Number
             </label>
@@ -101,7 +131,7 @@ const Signup = () => {
           <div className="flex flex-col">
             <label
               htmlFor="email"
-              className="text-lg font-semibold text-gray-600"
+              className="text-md font-semibold text-gray-600"
             >
               Email ID
             </label>
@@ -129,7 +159,7 @@ const Signup = () => {
             <div className="w-1/2">
               <label
                 htmlFor="password"
-                className="text-lg font-semibold text-gray-600"
+                className="text-md font-semibold text-gray-600"
               >
                 Password
               </label>
@@ -155,7 +185,7 @@ const Signup = () => {
             <div className="w-1/2">
               <label
                 htmlFor="confirmPassword"
-                className="text-lg font-semibold text-gray-600"
+                className="text-md font-semibold text-gray-600"
               >
                 Confirm Password
               </label>
@@ -180,7 +210,7 @@ const Signup = () => {
           <div className="flex flex-col">
             <label
               htmlFor="address"
-              className="text-lg font-semibold text-gray-600"
+              className="text-md font-semibold text-gray-600"
             >
               Address
             </label>
@@ -197,13 +227,14 @@ const Signup = () => {
             )}
           </div>
           {/* Submit Button */}
-          <button
+          {/* <button
             type="submit"
             id="signUpBtn"
             className="w-full mt-2 bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-500 transition duration-300 ease-in-out transform hover:scale-105"
           >
             Sign Up
-          </button>
+          </button> */}
+          <Bttn children={'Sign Up'} type={'submit'} isLoading={loadingBtn}/>
 
           {/* Login Link */}
           <div className="mt-2 text-center">

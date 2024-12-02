@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import './App.css'
 import Navbar from './components/Navbar'
@@ -12,6 +12,9 @@ import AddRouteForm from './components/AddRouteForm'
 import AddStopForm from './components/AddStopForm'
 import UserPanel from './components/UserPanel'
 import { ToastContainer } from 'react-toastify'
+import EmailVerifcation from './components/EmailVerifcation'
+import Loading from './components/Loading'
+import UserAuthMiddleware from './components/middleware/UserAuth'
 
 function App() {
   const router = createBrowserRouter([
@@ -19,10 +22,7 @@ function App() {
       path: '/',
       element: <><Login /></>
     },
-    {
-      path: '/user',
-      element: <><UserPanel /></>
-    },
+   
     {
       path: '/admin/add-route',
       element: <><AddRouteForm /></>
@@ -48,7 +48,8 @@ function App() {
       element: <><Login /></>
     },
     {
-      path:"/user/auth/verify/:slug"
+      path:"/user/auth/verify/:slug",
+      element:<EmailVerifcation/>
     },
     {
       path: '/user/auth/signup',
@@ -57,9 +58,25 @@ function App() {
     {
       path: '/user/auth/forget',
       element: <><Forget /></>
+    }, {
+      path: '/user',
+      element: <UserAuthMiddleware><UserPanel /></UserAuthMiddleware>
     },
   ])
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    // Simulate a loading delay
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000); // Adjust the delay as needed
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) {
+    return <Loading />;
+  }
   return (
     <>
       <RouterProvider router={router} />
