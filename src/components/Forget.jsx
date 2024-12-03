@@ -2,35 +2,45 @@ import React, { useState } from 'react';
 import bgImage from '../assets/img1.jpg';
 import { useForm } from 'react-hook-form';
 import { NavLink } from 'react-router-dom';
+import Bttn from './Bttn';
+import axios from 'axios';
+import { messageToast, messageToastError } from '../handlers/messageToast';
 
 const Forget = () => {
     const email = "2023se3@student.uet.edu.pk";
-    const [authenticated, setAuthenticated] = useState(false);
-
+    const [loadingBtn, setLoadingBtn] = useState(false);
     const {
         register,
         handleSubmit,
+        reset,
         formState: { errors },
     } = useForm();
 
-    const onSubmitEmail = (data) => {
+    const onSubmitEmail = async(data) => {
+        setLoadingBtn(true);
         console.log(`Submitted Email: ${data.email}`);
-        if (data.email === email) {
-            setAuthenticated(true);
+
+        try {
+            const response= await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/user/forget-password`, {email:data.email})
+            console.log(response.data);
+            if(response.data.success){
+                messageToast(response.data.msg);
+            }else{
+                messageToastError(response.data.msg);
+            }
             
-        } else {
-            alert('Email not recognized. Please try again.');
+        } catch (error) {
+            console.log(error);
+            
+            messageToastError(error.response.data.msg || "Internal Error Occur");
+        }finally{
+            reset()
+            setLoadingBtn(false);
         }
+
     };
 
-    const onSubmitPassword = (data) => {
-        if (data.newPassword === data.confirmPassword) {
-            console.log('Password successfully reset:', data.newPassword);
-            alert('Password reset successful!');
-        } else {
-            alert('Passwords do not match. Please try again.');
-        }
-    };
+ 
 
     return (
         <div className="relative flex items-center justify-center min-h-screen">
@@ -46,20 +56,16 @@ const Forget = () => {
             {/* Form Container */}
             <div className="relative z-10 bg-white/90 border border-gray-200 shadow-lg rounded-xl p-8 w-[90%] max-w-md">
                 <h1 className="text-2xl font-bold text-gray-800 text-center mb-6">
-                    {authenticated ? 'Reset Your Password' : 'Forgot Your Password?'}
+              Forgot Your Password?
                 </h1>
                 <p className="text-sm text-gray-600 text-center mb-8">
-                    {authenticated
-                        ? 'Enter your new password below.'
-                        : 'Enter your email address to reset your password.'}
+                 Enter your email address to reset your password.
                 </p>
 
                 <form
-                    onSubmit={handleSubmit(authenticated ? onSubmitPassword : onSubmitEmail)}
+                    onSubmit={handleSubmit( onSubmitEmail)}
                     className="flex flex-col gap-6"
                 >
-                    {!authenticated ? (
-                        <>
                             {/* Email Input */}
                             <div>
                                 <label
@@ -93,87 +99,17 @@ const Forget = () => {
                             </div>
 
                             {/* Submit Button */}
-                            <button
+                            {/* <button
                                 type="submit"
                                 className='w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-500 transition duration-300 ease-in-out transform hover:scale-105'
                                 >
                                 Reset Password
-                            </button>
-                        </>
-                    ) : (
-                        <>
-                            {/* New Password Input */}
-                            <div>
-                                <label
-                                    htmlFor="newPassword"
-                                    className="block text-gray-700 font-medium mb-2"
-                                >
-                                    New Password
-                                </label>
-                                <input
-                                    type="password"
-                                    id="newPassword"
-                                    placeholder="Enter new password"
-                                    className={`w-full p-3 rounded-lg border ${
-                                        errors.newPassword
-                                            ? 'border-red-500 focus:ring-red-400'
-                                            : 'border-gray-300 focus:ring-blue-600'
-                                    } focus:ring-2 outline-none`}
-                                    {...register('newPassword', {
-                                        required: 'New password is required.',
-                                        minLength: {
-                                            value: 6,
-                                            message: 'Password must be at least 6 characters.',
-                                        },
-                                    })}
-                                />
-                                {errors.newPassword && (
-                                    <p className="text-red-500 text-sm mt-2">
-                                        {errors.newPassword.message}
-                                    </p>
-                                )}
-                            </div>
+                            </button> */}
 
-                            {/* Confirm Password Input */}
-                            <div>
-                                <label
-                                    htmlFor="confirmPassword"
-                                    className="block text-gray-700 font-medium mb-2"
-                                >
-                                    Confirm Password
-                                </label>
-                                <input
-                                    type="password"
-                                    id="confirmPassword"
-                                    placeholder="Confirm new password"
-                                    className={`w-full p-3 rounded-lg border ${
-                                        errors.confirmPassword
-                                            ? 'border-red-500 focus:ring-red-400'
-                                            : 'border-gray-300 focus:ring-blue-600'
-                                    } focus:ring-2 outline-none`}
-                                    {...register('confirmPassword', {
-                                        required: 'Please confirm your password.',
-                                    })}
-                                />
-                                {errors.confirmPassword && (
-                                    <p className="text-red-500 text-sm mt-2">
-                                        {errors.confirmPassword.message}
-                                    </p>
-                                )}
-                            </div>
-
-                            {/* Submit Button */}
-                            <button
-                                type="submit"
-                                className='w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-500 transition duration-300 ease-in-out transform hover:scale-105'
-                                >
-                                Update Password
-                            </button>
-                        </>
-                    )}
+                    <Bttn children={'Forget Password'} type={'submit'} isLoading={loadingBtn}/>
+              
                 </form>
 
-                {!authenticated && (
                     <p className="text-center text-sm text-gray-700 mt-6">
                         New user?{' '}
                         <NavLink
@@ -183,7 +119,6 @@ const Forget = () => {
                             Sign Up
                         </NavLink>
                     </p>
-                )}
             </div>
         </div>
     );

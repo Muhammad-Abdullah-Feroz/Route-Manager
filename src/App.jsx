@@ -15,14 +15,38 @@ import { ToastContainer } from 'react-toastify'
 import EmailVerifcation from './components/EmailVerifcation'
 import Loading from './components/Loading'
 import UserAuthMiddleware from './components/middleware/UserAuth'
+import ResetPassword from './components/ResetPassword'
 
 function App() {
   const router = createBrowserRouter([
     {
       path: '/',
+      element: <UserAuthMiddleware><UserPanel /></UserAuthMiddleware>
+    },
+    {
+      path: '/user',
+      element: <UserAuthMiddleware><UserPanel /></UserAuthMiddleware>
+    },   
+     {
+      path: '/user/auth/login',
       element: <><Login /></>
     },
-   
+    {
+      path: '/user/auth/signup',
+      element: <><Signup /></>
+    },
+    {
+      path:"/user/auth/verify/:slug",
+      element:<EmailVerifcation/>
+    },
+    {
+      path: '/user/auth/forget',
+      element: <><Forget /></>
+    },
+    {
+      path: '/user/auth/forget/verify/:slug',
+      element:<ResetPassword/>
+    },
     {
       path: '/admin/add-route',
       element: <><AddRouteForm /></>
@@ -43,25 +67,10 @@ function App() {
       path: '/complaint',
       element: <><Navbar/><Complaint /></>
     },
-    {
-      path: '/user/auth/login',
-      element: <><Login /></>
-    },
-    {
-      path:"/user/auth/verify/:slug",
-      element:<EmailVerifcation/>
-    },
-    {
-      path: '/user/auth/signup',
-      element: <><Signup /></>
-    },
-    {
-      path: '/user/auth/forget',
-      element: <><Forget /></>
-    }, {
-      path: '/user',
-      element: <UserAuthMiddleware><UserPanel /></UserAuthMiddleware>
-    },
+
+   
+
+ 
   ])
   const [loading, setLoading] = useState(true);
 
