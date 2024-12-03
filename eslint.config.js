@@ -32,7 +32,13 @@ export default [
       'react-refresh/only-export-components': [
         'warn',
         { allowConstantExport: true },
-      ],
+      ], 
+      // "compilerOptions": {
+      //   "baseUrl": ".",
+      //   "paths": {
+      //     "@/*": ["./src/*"]
+      //   }
+      // }
     },
   },
 ]

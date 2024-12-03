@@ -3,7 +3,7 @@ import { FaBus, FaRegClock, FaMapMarkedAlt, FaExclamationTriangle } from 'react-
 
 const Dashboard = () => {
   return (
-    <div className="h-screen bg-gradient-to-r from-blue-500 via-blue-400 to-blue-300 text-white overflow-x-hidden">
+    <div className="h-screen bg-gradient-to-r rounded-md from-blue-500 via-blue-400 to-blue-300 text-white overflow-x-hidden">
       <div className="flex flex-col justify-center items-center h-full py-10">
         {/* Welcome Message */}
         <div className="text-center">

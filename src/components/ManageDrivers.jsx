@@ -1,5 +1,6 @@
 import React from 'react'
 import { BiEditAlt } from 'react-icons/bi';
+import Table from './Table';
 
 const ManageDrivers = ({ onAddDriver, onEditDriver }) => {
   const drivers = [
@@ -16,7 +17,7 @@ const ManageDrivers = ({ onAddDriver, onEditDriver }) => {
           >
               Add New Driver
           </button>
-          <table className="w-full table-auto border-collapse">
+          <table className="w-full  table-auto border-collapse">
               <thead className="text-lg">
                   <tr className="bg-blue-600 text-white">
                       <th className="py-3 px-4 text-center">Driver Name</th>
@@ -46,6 +47,8 @@ const ManageDrivers = ({ onAddDriver, onEditDriver }) => {
                   ))}
               </tbody>
           </table>
+
+          {/* <Table/> */}
       </div>
   );
 };
