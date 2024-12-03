@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { FaEdit, FaSignOutAlt } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import { messageToastError } from '../handlers/messageToast';
+import { messageToast, messageToastError } from '../handlers/messageToast';
 
 import mainLogo from '../assets/logo.png'; 
 import { useForm } from 'react-hook-form';
@@ -42,7 +42,6 @@ useEffect(() => {
           phone_no: d.phone_no,
           address: d.address,
         });
-        setValue('id', d._id);
         setValue('fullName', d.username);
           setValue('email', d.email);
           setValue('phone_no', d.phone_no);
@@ -65,15 +64,19 @@ useEffect(() => {
 const onSubmit = async (data) => {
   try {
     const token = localStorage.getItem('token');
-    const response = await axios.put(`${import.meta.env.VITE_LOCAL_BACKEND_URL}/api/user/profile`, data, {
-      headers: { Authorization: `Bearer ${token}` }
-    });
+    const profileData = {
+      name: data.fullName,
+      phone_no: data.phone_no,
+      address: data.address,
+    }
+    const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/user/edit-profile/${token}`, profileData);
+    console.log("Res",response.data);
     if (response.data.success) {
-      alert('Profile updated successfully');
+      messageToast('Profile updated successfully');
     }
   } catch (error) {
     console.error(error);
-    alert('Failed to update profile');
+    messageToastError('Failed to update profile');
   }
 };
 
@@ -86,10 +89,6 @@ const handleLogout=()=>{
 }
  
 
-  // const handleUpdatePassword = () => {
-  //   // Implement logic to update password
-  //   alert("Update Password functionality here.");
-  // };
   const GoToBack=()=>{
     setIsEdit(false)
     setValue('fullName', Info.fullName);
@@ -197,18 +196,7 @@ const handleLogout=()=>{
           </button>
         </div>
 
-        {/* Password Update
-        <div className="mt-8">
-          <h3 className="text-2xl font-semibold text-gray-800 mb-4">Password Update</h3>
-          <button 
-            className="flex items-center gap-2 bg-yellow-600 text-white py-2 px-4 rounded-lg hover:bg-yellow-700"
-            onClick={handleUpdatePassword}
-          >
-            <FaLock />
-            Update Password
-          </button>
-        </div> */}
-
+      
       </div>
     </div>
     </>  

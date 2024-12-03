@@ -1,7 +1,5 @@
 import React from 'react'
 import { BiEditAlt } from 'react-icons/bi';
-import Table from './Table';
-
 const ManageDrivers = ({ onAddDriver, onEditDriver }) => {
   const drivers = [
       { id: 1, name: 'John Doe', contact: '123-456-7890', vehicle: 'Bus 123' },
