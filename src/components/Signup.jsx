@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { NavLink } from "react-router-dom";
-import bgImage from "../assets/img1.jpg";
+import main_logo from "../assets/main_logo.png";
+import logo from "../assets/logo.png";
 import { messageToast, messageToastError } from "../handlers/messageToast";
 import axios from "axios";
 import Bttn from "./Bttn";
+
+
 
 const Signup = () => {
   const [loadingBtn, setLoadingBtn] = useState(false); 
@@ -56,27 +59,33 @@ const Signup = () => {
   };
 
   return (
-    <div className="relative flex min-w-full h-screen">
+    <div className="relative flex min-w-full h-screen bg-white/70 backdrop-blur-lg ">
       {/* Background Image */}
-      <div className="absolute inset-0 z-0">
+      {/* <div className="absolute inset-0 z-0">
         <img
           src={bgImage}
           alt="background"
           className="object-cover w-full h-full"
         />
-      </div>
+      </div> */}
 
       {/* Form Container */}
-      <div className="  z-10 w-full md:w-1/2 h-full flex justify-center items-center px-6">
+      <div className="  z-10 w-full  h-full flex justify-around items-center px-6">
+      <div className='hidden md:flex'>
+                    <img src={main_logo} className='rounded-full size-[90%] border-2 drop-shadow-lg border-gray-100' alt="" />
+                </div>
         <form
-          className={`flex flex-col w-full max-w-lg gap-4 p-6 bg-white/70 backdrop-blur-lg border border-white/20 rounded-xl shadow-lg transition-all duration-1000 ease-in-out 
+          className={`flex flex-col w-full max-w-lg gap-4 p-6  transition-all duration-1000 ease-in-out 
           opacity-90
           `}
           onSubmit={handleSubmit(onSubmit)}
           id="UsersignupForm"
         >
+          <div className='flex justify-center items-center mb-1 md:hidden'>
+                    <img src={logo} className=' lg:size-[35%] size-[27%] ' alt="" />
+                </div>
           <h2 className="text-2xl text-center font-bold text-gray-700 mb-2">
-            Sign Up
+            Create new account
           </h2>
 
           {/* Full Name */}
@@ -234,6 +243,7 @@ const Signup = () => {
           >
             Sign Up
           </button> */}
+          
           <Bttn children={'Sign Up'} type={'submit'} isLoading={loadingBtn}/>
 
           {/* Login Link */}

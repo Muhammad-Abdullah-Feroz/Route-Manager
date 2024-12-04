@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import bgImage from "../assets/img1.jpg";
-import Loading from "./Loading";
+import main_logo from "../assets/main_logo.png";
+import logo from "../assets/logo.png";
 import { useNavigate, useParams } from "react-router-dom";
 import { messageToast, messageToastError } from "../handlers/messageToast";
 import Bttn from "./Bttn";
@@ -51,28 +52,36 @@ const ResetPassword = () => {
 
   return (
     <>
-      <div className="relative flex items-center justify-center min-h-screen">
-        {/* Background Image */}
-        <div className="absolute inset-0 overflow-hidden z-0">
-          <img
-            src={bgImage}
-            alt="Background"
-            className="w-full h-full object-cover"
-          />
-        </div>
+     <div className="relative flex min-w-full h-screen bg-white/70 backdrop-blur-lg ">
+      {/* Background Image */}
+      {/* <div className="absolute inset-0 z-0">
+        <img
+          src={bgImage}
+          alt="background"
+          className="object-cover w-full h-full"
+        />
+      </div> */}
 
-        {/* Password and Confirm Password */}
-        <div className="relative z-10 bg-white/90 border border-gray-200 shadow-lg rounded-xl p-8 w-[90%] max-w-md">
-          <h1 className="text-2xl font-bold text-gray-800 text-center mb-6">
+      {/* Form Container */}
+      <div className="  z-10 w-full  h-full flex justify-around items-center px-6">
+      <div className='hidden md:flex'>
+                    <img src={main_logo} className='rounded-full size-[90%] border-2 drop-shadow-lg border-gray-100' alt="" />
+                </div>
+        <form
+          className={`flex flex-col w-full max-w-lg gap-4 p-6  transition-all duration-1000 ease-in-out 
+          opacity-90
+          `}
+            onSubmit={handleSubmit(ChangePassword)}
+          >
+                   <div className='flex justify-center items-center mb-1 md:hidden'>
+                    <img src={logo} className=' lg:size-[35%] size-[27%] ' alt="" />
+                </div>
+          <h1 className="text-2xl font-bold text-gray-800 text-center">
             Reset Your Password
           </h1>
-          <p className="text-sm text-gray-600 text-center mb-8">
+          <p className="text-sm text-gray-600 text-center mb-4">
             Enter your new password below.
           </p>
-          <form
-            onSubmit={handleSubmit(ChangePassword)}
-            className="flex flex-col gap-6"
-          >
             <div className="flex flex-col justify-between gap-6">
               <div className="w-full">
                 <label
@@ -124,7 +133,7 @@ const ResetPassword = () => {
                 )}
               </div>
             </div>
-
+                <div></div>
             <Bttn
               children={"Change Password"}
               type={"submit"}

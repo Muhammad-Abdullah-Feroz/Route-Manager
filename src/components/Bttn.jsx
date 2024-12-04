@@ -6,7 +6,7 @@ const Bttn = ({type, isLoading, onClick, children, ...props }) => {
     type={type}
       onClick={onClick}
       disabled={isLoading}
-      className={`relative flex items-center justify-center px-4 py-2 font-semibold text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition duration-300 ${isLoading ? 'cursor-not-allowed opacity-50' : ''}`}
+      className={`relative flex items-center justify-center px-4 py-2 font-semibold text-white bg-blue-600 rounded-lg hover:scale-95 hover:bg-blue-700 transition duration-300 ${isLoading ? 'cursor-not-allowed opacity-50' : ''}`}
       {...props}
     >
       {isLoading && (

@@ -16,6 +16,7 @@ import EmailVerifcation from './components/EmailVerifcation'
 import Loading from './components/Loading'
 import UserAuthMiddleware from './components/middleware/UserAuth'
 import ResetPassword from './components/ResetPassword'
+import AdminLogIn from './components/AdminLogIn'
 
 function App() {
   const router = createBrowserRouter([
@@ -60,8 +61,12 @@ function App() {
       element: <><EditRouteForm /></>
     },
     {
-      path: '/admin',
+      path: '/_admin/admin',
       element: <><AdminPanel /></>
+    },
+    {
+      path:'/admin/auth/login',
+      element:<AdminLogIn/>
     },
     {
       path: '/complaint',

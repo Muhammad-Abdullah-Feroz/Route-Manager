@@ -9,7 +9,7 @@ const UserAuthMiddleware = ({ children }) => {
     const checkToken = async () => {
       const token = localStorage.getItem('token');
       if (!token) {
-        navigate('user/auth/login');
+        navigate('/user/auth/login');
         return;
       }
 
@@ -19,14 +19,14 @@ const UserAuthMiddleware = ({ children }) => {
         
         if (!response.data.success) {
           localStorage.removeItem('token');
-            navigate('user/auth/login');
+            navigate('/user/auth/login');
         }else{
           console.log(response.data.data);
         }
       } catch (error) {
         localStorage.removeItem('token');
        
-        navigate('user/auth/login');
+        navigate('/user/auth/login');
       }
     };
 
