@@ -1,12 +1,12 @@
 import React from 'react';
 
-const Bttn = ({type, isLoading, onClick, children, ...props }) => {
+const Bttn = ({type, isLoading, onClick, children ,clsName,...props }) => {
   return (
     <button
     type={type}
       onClick={onClick}
       disabled={isLoading}
-      className={`relative flex items-center justify-center px-4 py-2 font-semibold text-white bg-blue-600 rounded-lg hover:scale-95 hover:bg-blue-700 transition duration-300 ${isLoading ? 'cursor-not-allowed opacity-50' : ''}`}
+      className={clsName?`${clsName} relative hover:scale-95 ${isLoading ? 'cursor-not-allowed opacity-50' : ''}`:`relative flex items-center justify-center px-4 py-2 font-semibold text-white bg-blue-600 rounded-lg hover:scale-95 hover:bg-blue-700 transition duration-300 ${isLoading ? 'cursor-not-allowed opacity-50' : ''}`}
       {...props}
     >
       {isLoading && (

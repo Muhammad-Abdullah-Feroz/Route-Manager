@@ -17,6 +17,7 @@ import Loading from './components/Loading'
 import UserAuthMiddleware from './components/middleware/UserAuth'
 import ResetPassword from './components/ResetPassword'
 import AdminLogIn from './components/AdminLogIn'
+import AdminAuthMiddleware from './components/middleware/AdminAuth'
 
 function App() {
   const router = createBrowserRouter([
@@ -50,19 +51,19 @@ function App() {
     },
     {
       path: '/admin/add-route',
-      element: <><AddRouteForm /></>
+      element: <AdminAuthMiddleware><AddRouteForm /></AdminAuthMiddleware>
     },
     {
       path: '/admin/add-stop',
-      element: <><AddStopForm /></>
+      element: <AdminAuthMiddleware><AddStopForm /></AdminAuthMiddleware>
     },
     {
       path: '/admin/edit/:id',
-      element: <><EditRouteForm /></>
+      element: <AdminAuthMiddleware><EditRouteForm /></AdminAuthMiddleware>
     },
     {
-      path: '/_admin/admin',
-      element: <><AdminPanel /></>
+      path: '/_admin/admin-dashboard',
+      element: <AdminAuthMiddleware><AdminPanel /></AdminAuthMiddleware>
     },
     {
       path:'/admin/auth/login',

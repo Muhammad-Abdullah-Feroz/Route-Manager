@@ -10,10 +10,18 @@ import { FaPerson } from "react-icons/fa6";
 import { BsStoplights } from "react-icons/bs";
 import { GoSidebarCollapse, GoSidebarExpand } from "react-icons/go";
 import { AiOutlineDashboard } from "react-icons/ai";
+import { useNavigate } from "react-router-dom";
 
 const AdminPanel = () => {
-  const [isSidebarExpanded, setIsSidebarExpanded] = useState(true);
+  const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
+  const navigate = useNavigate();
   const [selectedView, setSelectedView] = useState(""); // state to track selected view
+  const handleLogout = () => {
+    if(window.confirm("Are you sure you want to logout?")){
+    localStorage.removeItem("token");
+    navigate("/admin/auth/login");
+    }
+  };
     // Function to handle sidebar item click and change selected view
   const handleSidebarClick = (view) => {
     setSelectedView(view);
@@ -30,7 +38,7 @@ const AdminPanel = () => {
             <nav className="flex space-x-4">
               <button
                 className="flex items-center gap-1 bg-white font-bold text-blue-600 border-2 border-blue-600 py-2 px-4 rounded-lg hover:bg-blue-500 hover:text-white transition duration-300 ease-in-out transform hover:scale-105"
-                onClick={() => navigate("/")}
+                onClick={handleLogout}
               >
                 <BiLogOut />
                 Logout

@@ -1,6 +1,9 @@
+import axios from 'axios';
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import Bttn from './Bttn';
+import { messageToast, messageToastError } from '../handlers/messageToast';
 
 const AdminLogIn = () => {
     const {
@@ -10,19 +13,35 @@ const AdminLogIn = () => {
         reset,
       } = useForm();
 
-      const [errorMessage, setErrorMessage] = useState("");
-      
+      const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const adminCredentials = { username: "admin", password: "password" };
-      const onSubmit = (data) => {
-        if (
-          data.username === adminCredentials.username &&
-          data.password === adminCredentials.password
-        ) {
-        } else {
-          setErrorMessage("Invalid username or password. Please try again.");
-          reset();
-        }
+      const onSubmit = async(data) => {
+        setLoading(true)
+       console.log(data);
+       const LogInData={
+        email:data.email,
+        password:data.password
+       }
+try {
+  const response=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/admin/login`,LogInData)
+   console.log(response.data);
+  if(response.data.success){
+    localStorage.setItem('token',response.data.token)
+    messageToast("Login Successfully")
+    setTimeout(() => {
+      navigate('/_admin/admin-dashboard')
+      
+    }, 4000);
+  }
+} catch (error) {
+  console.log(error.response.data);
+  messageToastError("Error : wrong credentials")
+  
+}finally{
+reset()
+setLoading(false)
+}
+       
       };
 
 
@@ -35,19 +54,23 @@ const AdminLogIn = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-4">
           <label htmlFor="username" className="block">
-            Username
+            email
           </label>
           <input
             type="text"
             id="username"
-            {...register("username", {
-              required: "Username is required",
+            {...register("email", {
+              required: "Email is required",
+              pattern: {
+                value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/,
+                message: "Invalid email format",
+              },
             })}
-            className="w-full p-2 border border-gray-300 rounded"
+            className="w-full p-2 border font-light border-gray-300 rounded"
           />
-          {errors.username && (
+          {errors.email && (
             <p className="text-red-500 text-sm">
-              {errors.username.message}
+              {errors.email.message}
             </p>
           )}
         </div>
@@ -62,7 +85,7 @@ const AdminLogIn = () => {
             {...register("password", {
               required: "Password is required",
             })}
-            className="w-full p-2 border border-gray-300 rounded"
+            className="w-full p-2 border  font-light border-gray-300 rounded"
           />
           {errors.password && (
             <p className="text-red-500 text-sm">
@@ -71,17 +94,14 @@ const AdminLogIn = () => {
           )}
         </div>
 
-        {errorMessage && (
-          <p className="text-red-500 text-sm">{errorMessage}</p>
-        )}
+      
 
         <div className="flex justify-center">
-          <button
+          <Bttn
             type="submit"
-            className="bg-blue-500 text-white py-2 px-4 rounded-md"
-          >
-            Login
-          </button>
+            isLoading={loading}
+            children={"Login"}
+          />
         </div>
       </form>
     </div>

@@ -37,6 +37,7 @@ const Complaint = () => {
             messageToastError(err?.response?.data?.msg || err?.msg || err)
         }finally{
             setLoadingBtn(false);
+            reset()
         }
     };
 
