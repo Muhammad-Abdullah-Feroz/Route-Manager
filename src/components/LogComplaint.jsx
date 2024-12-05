@@ -1,14 +1,45 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import Bttn from './Bttn';
+import axios from 'axios';
+import { messageToast, messageToastError } from '../handlers/messageToast';
 
 const Complaint = () => {
+    const [loadingBtn, setLoadingBtn] = React.useState(false);
     const {
         register,
         handleSubmit,
+        reset,
         formState: { errors },
     } = useForm();
 
-    const onSubmit = (data) => console.log(data);
+    const onSubmit = async(data) =>{
+        setLoadingBtn(true);
+        console.log(data);
+        const ComplaintData = {
+            registration_no: data.regNumber,
+            complaint_description: data.complaint,
+        }
+        console.log(ComplaintData);
+        try {
+            const response=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/user/create-complaint`,ComplaintData)
+
+            console.log(response.data)
+            if(response.data.success){
+                messageToast(response.data.msg)
+            }else{
+                messageToast(response.data.msg)
+                console.log("res",response.data);
+            }
+            
+        } catch (error) {
+            
+            messageToastError(err?.response?.data?.msg || err?.msg || err)
+        }finally{
+            setLoadingBtn(false);
+            reset()
+        }
+    };
 
     return (
         <div className="w-full bg-gray-100">
@@ -36,7 +67,7 @@ const Complaint = () => {
                             {...register("regNumber", {
                                 required: "Registration Number is required",
                                 pattern: {
-                                    value: /^[0-9]{4}[A-Z]{2}[0-9]{3}$/,
+                                    value: /^[0-9]{4}[A-Za-z]{2}[0-9]{1,3}$/,
                                     message: "Invalid Registration Number format",
                                 },
                             })}
@@ -46,32 +77,7 @@ const Complaint = () => {
                         )}
                     </div>
 
-                    {/* Route Selection */}
-                    <div className="flex-1 flex flex-col gap-2">
-                        <label
-                            htmlFor="routeNumber"
-                            className="text-lg font-medium text-gray-700"
-                        >
-                            Select Route
-                        </label>
-                        <select
-                            id="routeNumber"
-                            className={`w-full px-4 py-3 border ${errors.routeNumber ? "border-red-500" : "border-gray-300"} rounded-lg shadow-sm text-gray-700 focus:ring-2 focus:ring-blue-400 focus:outline-none`}
-                            {...register("routeNumber", { required: "Please select a route" })}
-                        >
-                            <option value="" disabled selected>
-                                Select a route
-                            </option>
-                            {[...Array(10)].map((_, i) => (
-                                <option key={i} value={`Route ${i + 1}`}>
-                                    Route {i + 1}
-                                </option>
-                            ))}
-                        </select>
-                        {errors.routeNumber && (
-                            <p className="text-sm text-red-500 mt-1">{errors.routeNumber.message}</p>
-                        )}
-                    </div>
+                    
                 </div>
 
                 {/* Complaint Textarea */}
@@ -101,12 +107,14 @@ const Complaint = () => {
                 </div>
 
                 {/* Submit Button */}
-                <button
+                {/* <button
                     type="submit"
                     className="w-full px-6 py-3 text-lg font-medium text-white bg-gradient-to-r from-blue-500 to-blue-700 rounded-lg shadow-md hover:from-blue-600 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                 >
                     Submit Complaint
-                </button>
+                </button> */}
+                 <Bttn children={'Submit Complaint'} type={'submit'} isLoading={loadingBtn}/>
+
             </form>
         </div>
     );

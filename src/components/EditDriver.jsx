@@ -1,86 +1,170 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import Bttn from "./Bttn";
+import axios from "axios";
+import { messageToast, messageToastError } from "../handlers/messageToast";
 
 const EditDriver = ({ driver, onBack }) => {
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-    } = useForm({
-        defaultValues: {
-            name: driver.name,
-            contact: driver.contact,
-            vehicle: driver.vehicle,
-        },
-    });
-
-    const onSubmit = (data) => {
-        console.log('Updated Driver Data:', data);
-        // Logic to update driver data (e.g., API call)
-        onBack(); // Navigate back to the driver list
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      id: driver._id,
+      name: driver.name,
+      phone_no: driver.phone,
+      email: driver.email,
+      cnic: driver.cnic,
+      address: driver.address,
+    }
+  });
+  const [isLoading, setIsLoading] = useState(false);
+  const onSubmit =async(data) => {
+    setIsLoading(true);
+    const updatedata = {
+      driver_id: data.id,
+      name: data.name,
+      email: data.email,
+      phone: data.phone_no,
+      cnic: data.cnic,
+      address: data.address,
     };
 
-    return (
-        <div className="bg-white rounded-lg shadow-md p-6">
-            <h2 className="text-3xl font-bold text-gray-800 mb-6">Edit Driver</h2>
-            <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="mb-4">
-                    <label className="block text-gray-700">Name:</label>
-                    <input
-                        type="text"
-                        {...register('name', { required: 'Name is required' })}
-                        className="w-full p-2 border border-gray-300 rounded"
-                    />
-                    {errors.name && (
-                        <span className="text-red-500 text-sm">{errors.name.message}</span>
-                    )}
-                </div>
-                <div className="mb-4">
-                    <label className="block text-gray-700">Contact:</label>
-                    <input
-                        type="text"
-                        {...register('contact', {
-                            required: 'Contact is required',
-                            pattern: {
-                                value: /^[0-9]{10,15}$/,
-                                message: 'Invalid contact number',
-                            },
-                        })}
-                        className="w-full p-2 border border-gray-300 rounded"
-                    />
-                    {errors.contact && (
-                        <span className="text-red-500 text-sm">{errors.contact.message}</span>
-                    )}
-                </div>
-                <div className="mb-4">
-                    <label className="block text-gray-700">Assigned Vehicle:</label>
-                    <input
-                        type="text"
-                        {...register('vehicle', { required: 'Vehicle is required' })}
-                        className="w-full p-2 border border-gray-300 rounded"
-                    />
-                    {errors.vehicle && (
-                        <span className="text-red-500 text-sm">{errors.vehicle.message}</span>
-                    )}
-                </div>
-                <div className="flex items-center justify-between">
-                    <button
-                        type="button"
-                        onClick={onBack}
-                        className="bg-gray-500 text-white py-2 px-4 rounded mr-4"
-                    >
-                        Back
-                    </button>
-                    <button
-                        type="submit"
-                        className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-300"
-                    >
-                        Save
-                    </button>
-                </div>
-            </form>
+    try {
+        const response=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/admin/driver/update-driver`,updatedata);
+        if(response.data.success){
+            console.log(response);
+            messageToast("Driver Updated Successfully");
+            
+            setTimeout(() => {
+                setIsLoading(false);
+                onBack(); // Navigate back to the driver list
+            }, 4000);
+        }else{
+            messageToastError("Something went wrong, please try again");
+        }
+
+    } catch (error) {
+        console.log(error);
+        
+        messageToastError(error.response.data.msg);
+        setIsLoading(false);
+        
+    }
+    // console.log("Updated Driver Data:", updatedata);
+  };
+
+  return (
+    <div className="bg-white rounded-lg shadow-md p-6">
+      <h2 className="text-3xl font-bold text-gray-800 mb-6">Edit Driver</h2>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="mb-4">
+          <label className="block text-gray-700">Name:</label>
+          <input
+            type="text"
+            {...register("name", { required: "Name is required" })}
+            className="w-full p-2 border font-light border-gray-300 rounded"
+            placeholder="John Doe"
+          />
+          {errors.name && (
+            <span className="text-red-500 text-sm">{errors.name.message}</span>
+          )}
         </div>
-    );
+
+        <div className="mb-4">
+          <label className="block text-gray-700">Email:</label>
+          <input
+            type="email"
+            {...register("email", {
+              required: "Email is required",
+              pattern: {
+                value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                message: "Invalid email address",
+              },
+            })}
+            placeholder="example@gmail.com"
+            className="w-full p-2 border border-gray-300 font-light rounded"
+          />
+          {errors.email && (
+            <span className="text-red-500 text-sm">{errors.email.message}</span>
+          )}
+        </div>
+
+        <div className="mb-4">
+          <label className="block text-gray-700">Phone Number:</label>
+          <input
+            type="text"
+            {...register("phone_no", {
+              required: "Phone number is required",
+              pattern: {
+                value: /^[0-9]{11}$/,
+                message: "Invalid phone number",
+              },
+            })}
+            placeholder="03123456789"
+            className="w-full p-2 border border-gray-300 rounded font-light"
+          />
+          {errors.phone_no && (
+            <span className="text-red-500 text-sm">
+              {errors.phone_no.message}
+            </span>
+          )}
+        </div>
+
+        <div className="mb-4">
+          <label className="block text-gray-700">CNIC:</label>
+          <input
+            type="text"
+            {...register("cnic", {
+              required: "CNIC is required",
+              pattern: {
+                value: /^[0-9]{13}$/,
+                message: "Invalid CNIC number",
+              },
+            })}
+            placeholder="1234512345678"
+            className="w-full p-2 border border-gray-300 rounded font-light"
+          />
+          {errors.cnic && (
+            <span className="text-red-500 text-sm">{errors.cnic.message}</span>
+          )}
+        </div>
+
+        <div className="mb-4">
+          <label className="block text-gray-700">Address:</label>
+          <input
+            type="text"
+            {...register("address", { required: "Address is required" })}
+            className="w-full p-2 border border-gray-300 rounded font-light"
+            placeholder="House #, Street, City"
+          />
+          {errors.address && (
+            <span className="text-red-500 text-sm">
+              {errors.address.message}
+            </span>
+          )}
+        </div>
+
+        <div className="flex justify-between">
+          <button
+            type="button"
+            onClick={onBack}
+            className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
+          >
+            Back
+          </button>
+          {/* <button
+            type="submit"
+            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          >
+            Save
+          </button> */}
+          <Bttn type={"submit"} isLoading={isLoading} children={"save"} />
+        </div>
+      </form>
+    </div>
+  );
 };
 
 export default EditDriver;

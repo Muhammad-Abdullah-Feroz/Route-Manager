@@ -1,60 +1,123 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
+import React, { useEffect, useState } from 'react';
+import { useForm, Controller } from 'react-hook-form';
+import Select from 'react-select';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { messageToast, messageToastError } from '../handlers/messageToast';
+import Bttn from './Bttn';
 
-const AddRouteForm = ({ onBack }) => {
-  const { register, handleSubmit, formState: { errors } } = useForm();
-  const navigate = useNavigate();
+const AddRouteForm = ({ drivers, stops, onBack }) => {
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm();
+  const [isLoading,setIsLoading]=useState(false);
+  const [driverOptions, setDriverOptions] = useState([]);
+  const [stopOptions, setStopOptions] = useState([]);
+console.log("AddRouteForm -> drivers", drivers)
+console.log("AddRouteForm -> stops", stops);
 
-  const onSubmit = (data) => {
-    // Submit the data to API or perform other actions (e.g., adding a new route)
-    console.log('New Route Data:', data);
-    // navigate("/admin")
-    onBack();
-  };
 
+  useEffect(() => {
+    setDriverOptions(drivers?.map(driver => ({
+      value: driver._id,
+      label: driver.name,
+    })));
+    setStopOptions(stops?.map(stop => ({
+      value: stop._id,
+      label: stop.name,
+    })));
+  }, [drivers, stops]);
+const SubmitForm=async(data)=>{
+  setIsLoading(true);
+  const addData={
+    route_no:data.routeName,
+    driver_id:data.driver.value,
+    vehicle_no:data.vech_no,
+    stops_id:data.stops.map(stop=>stop.value)
+    
+ }
+try {
+  const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/admin/route/add-route`, addData);
+  console.log(res);
+  if (res.data.success) {
+    messageToast(res.data.msg)
+    setTimeout(() => {
+      setIsLoading(false);
+      onBack();
+    }, 4000);
+    // navigate('/admin/routes');
+  }else{
+    
+    setIsLoading(false);
+  }
+} catch (error) {
+  console.log(error);
+  
+  setIsLoading(false);
+  messageToastError(error.response.data.msg)
+}
+console.log(addData);
+
+}
   return (
     <div className="p-8 bg-gray-100 h-screen">
       <div className="bg-white rounded-lg shadow-md p-6">
         <h2 className="text-3xl font-bold text-gray-800 mb-6">Add New Route</h2>
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(SubmitForm)}>
           <div className="mb-4">
-            <label className="block text-lg font-semibold mb-2">Route Number</label>
+            <label className="block text-lg font-semibold mb-2">Route Name</label>
             <input
               type="text"
-              {...register('routeNumber', { required: 'Route number is required' })}
-              className={`w-full px-4 py-2 border ${errors.routeNumber ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:ring-2 focus:ring-blue-500`}
+              {...register('routeName', { required: 'Route name is required' })}
+              className={`w-full px-4 py-2 border ${errors.routeName ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:ring-2 focus:ring-blue-500`}
             />
-            {errors.routeNumber && <p className="text-red-500 text-sm mt-1">{errors.routeNumber.message}</p>}
+            {errors.routeName && <p className="text-red-500 text-sm mt-1">{errors.routeName.message}</p>}
           </div>
 
           <div className="mb-4">
-            <label className="block text-lg font-semibold mb-2">Driver Name</label>
+            <label className="block text-lg font-semibold mb-2">Vehicle No </label>
             <input
               type="text"
-              {...register('driverName', { required: 'Driver name is required' })}
-              className={`w-full px-4 py-2 border ${errors.driverName ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:ring-2 focus:ring-blue-500`}
+              {...register('vech_no', { required: 'Vechile No is required' })}
+              className={`w-full px-4 py-2 border ${errors.vech_no ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:ring-2 focus:ring-blue-500`}
             />
-            {errors.driverName && <p className="text-red-500 text-sm mt-1">{errors.driverName.message}</p>}
+            {errors.vech_no && <p className="text-red-500 text-sm mt-1">{errors.vech_no.message}</p>}
           </div>
 
           <div className="mb-4">
-            <label className="block text-lg font-semibold mb-2">Bus Number</label>
-            <input
-              type="text"
-              {...register('busNumber', { required: 'Bus number is required' })}
-              className={`w-full px-4 py-2 border ${errors.busNumber ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:ring-2 focus:ring-blue-500`}
+            <label className="block text-lg font-semibold mb-2">Driver</label>
+            <Controller
+              name="driver"
+              control={control}
+              rules={{ required: 'Driver is required' }}
+              render={({ field }) => (
+                <Select
+                  {...field}
+                  options={driverOptions}
+                  className={`w-full ${errors.driver ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:ring-2 focus:ring-blue-500`}
+                />
+              )}
             />
-            {errors.busNumber && <p className="text-red-500 text-sm mt-1">{errors.busNumber.message}</p>}
+            {errors.driver && <p className="text-red-500 text-sm mt-1">{errors.driver.message}</p>}
           </div>
 
           <div className="mb-4">
             <label className="block text-lg font-semibold mb-2">Stops</label>
-            <input
-              type="text"
-              {...register('stops', { required: 'Please enter stops, separated by commas' })}
-              className={`w-full px-4 py-2 border ${errors.stops ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:ring-2 focus:ring-blue-500`}
-              placeholder="Stop 1, Stop 2, Stop 3"
+            <Controller
+              name="stops"
+              control={control}
+              rules={{ required: 'Please select stops' }}
+              render={({ field }) => (
+                <Select
+                  {...field}
+                  options={stopOptions}
+                  isMulti
+                  className={`w-full ${errors.stops ? 'border-red-500' : 'border-gray-300'} rounded-lg focus:ring-2 focus:ring-blue-500`}
+                />
+              )}
             />
             {errors.stops && <p className="text-red-500 text-sm mt-1">{errors.stops.message}</p>}
           </div>
@@ -67,12 +130,7 @@ const AddRouteForm = ({ onBack }) => {
             >
               Back
             </button>
-            <button
-              type="submit"
-              className="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 transition duration-300"
-            >
-              Save
-            </button>
+            <Bttn type={"submit"} isLoading={isLoading} children={"save"} />
           </div>
         </form>
       </div>
