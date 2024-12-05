@@ -139,10 +139,10 @@ const RouteDetails = () => {
                     <h3 className=" font-semibold">
                       Route name : <span className="font-light text-lg">{route.route_no}</span>
                     </h3>
-                    <p>Driver: <span className="font-light text-lg">{route.driver.value}</span> </p>
-                    <p>Bus No: <span className="font-light text-lg">{route.vehicle_no}</span> </p>
+                    <p>Driver name : <span className="font-light text-lg">{route.driver.label}</span> </p>
                     
                     <p>Driver Ph_no: <span className="font-light text-lg">{route.driver.phone}</span> </p>
+                    <p>Bus # : <span className="font-light text-lg">{route.vehicle_no}</span> </p>
                   </div>
                   <div className="text-2xl font-bold">
                     {expandedRoute === route._id ? "-" : "+"}
