@@ -3,117 +3,44 @@ import AddRouteForm from "./AddRouteForm";
 import EditRouteForm from "./EditRouteForm";
 import { BiEditAlt } from "react-icons/bi";
 import axios from "axios";
+import SpanLoader from "./SpanLoader";
+import { GrChapterNext, GrChapterPrevious } from "react-icons/gr";
+import { LuRefreshCcwDot } from "react-icons/lu";
+import Modal from "./Modal";
+import { MdDeleteOutline } from "react-icons/md";
 
 // Route Management Component
 const ManageRoutes = () => {
   const [StopsData, setStopsData] = useState([]);
   const [DriversData, setDriversData] = useState([]);
+  const [loadingPage, setLoadingPage] = useState(false);
   const [activeComponent, setActiveComponent] = useState("list"); // Controls which component to show
   const [selectedRoute, setSelectedRoute] = useState(null); // Holds data for the selected route
 
   // Sample route data (could be dynamic from an API)
-  const routes = [
-    {
-      id: 1,
-      route_no: "Route 1",
-      vehicle_no: "123",
-      driver: "John Doe", // Driver's name
-      stops: [
-        { name: "Stop 1", latitude: 33.6844, longitude: 73.0479 },
-        { name: "Stop 2", latitude: 33.6845, longitude: 73.048 },
-      ],
-    },
-    {
-      id: 2,
-      route_no: "Route 2",
-      vehicle_no: "456",
-      driver: "Jane Smith",
-      stops: [
-        { name: "Stop A", latitude: 33.685, longitude: 73.049 },
-        { name: "Stop B", latitude: 33.6851, longitude: 73.0491 },
-      ],
-    },
-    {
-      id: 3,
-      route_no: "Route 3",
-      vehicle_no: "789",
-      driver: "Mike Johnson",
-      stops: [
-        { name: "Stop X", latitude: 33.686, longitude: 73.05 },
-        { name: "Stop Y", latitude: 33.6861, longitude: 73.0501 },
-      ],
-    },
-    {
-      id: 4,
-      route_no: "Route 4",
-      vehicle_no: "1011",
-      driver: "Sarah Lee",
-      stops: [
-        { name: "Stop Alpha", latitude: 33.687, longitude: 73.051 },
-        { name: "Stop Beta", latitude: 33.6871, longitude: 73.0511 },
-      ],
-    },
-    {
-      id: 5,
-      route_no: "Route 5",
-      vehicle_no: "1213",
-      driver: "Chris Brown",
-      stops: [
-        { name: "Stop 1A", latitude: 33.688, longitude: 73.052 },
-        { name: "Stop 2A", latitude: 33.6881, longitude: 73.0521 },
-      ],
-    },
-    {
-      id: 6,
-      route_no: "Route 6",
-      vehicle_no: "1415",
-      driver: "Emma Wilson",
-      stops: [
-        { name: "Stop Z", latitude: 33.689, longitude: 73.053 },
-        { name: "Stop W", latitude: 33.6891, longitude: 73.0531 },
-      ],
-    },
-    {
-      id: 7,
-      route_no: "Route 7",
-      vehicle_no: "1617",
-      driver: "Lucas Green",
-      stops: [
-        { name: "Stop 1B", latitude: 33.69, longitude: 73.054 },
-        { name: "Stop 2B", latitude: 33.6901, longitude: 73.0541 },
-      ],
-    },
-    {
-      id: 8,
-      route_no: "Route 8",
-      vehicle_no: "1819",
-      driver: "Olivia Black",
-      stops: [
-        { name: "Stop 1C", latitude: 33.691, longitude: 73.055 },
-        { name: "Stop 2C", latitude: 33.6911, longitude: 73.0551 },
-      ],
-    },
-    {
-      id: 9,
-      route_no: "Route 9",
-      vehicle_no: "2021",
-      driver: "Ethan Davis",
-      stops: [
-        { name: "Stop 3", latitude: 33.692, longitude: 73.056 },
-        { name: "Stop 4", latitude: 33.6921, longitude: 73.0561 },
-      ],
-    },
-    {
-      id: 10,
-      route_no: "Route 10",
-      vehicle_no: "2223",
-      driver: "Sophia Taylor",
-      stops: [
-        { name: "Stop 5", latitude: 33.693, longitude: 73.057 },
-        { name: "Stop 6", latitude: 33.6931, longitude: 73.0571 },
-      ],
-    },
-  ];
+  const [routes, setRoutes] = useState([]);
+  const fetchRoutes = async () => {
+    setLoadingPage(true);
+    try {
+        
+        const res = await axios.get(
+            `${import.meta.env.VITE_BACKEND_URL}/api/admin/route`
+        );
+        console.log("fetching routes data");
+        console.log(res);
+
+      if (res.data.success) {
+        console.log(res.data.data);
+        setRoutes(res.data.data);
+        setLoadingPage(false);
+      }
+    } catch (error) {
+      console.log(error);
+
+      console.log(error.response.data);
+    }
+  };
+
   const fetchStopsdata = async () => {
     try {
       console.log("fetching stops data");
@@ -134,10 +61,10 @@ const ManageRoutes = () => {
 
     try {
       const res = await axios.get(
-        `${import.meta.env.VITE_LOCAL_BACKEND_URL}/api/admin/driver/isAvailable`
+        `${import.meta.env.VITE_BACKEND_URL}/api/admin/driver/isAvailable`
       );
+      console.log(res.data.data);
       if (res.data.success) {
-        console.log(res.data.data);
         setDriversData(res.data.data);
       }
     } catch (error) {
@@ -145,12 +72,17 @@ const ManageRoutes = () => {
     }
   };
   useEffect(() => {
+    fetchRoutes();
     fetchStopsdata();
     fetchDriversdata();
     // Fetch data from an API and update the `routes` state
   }, []);
 
   const handleEdit = (route) => {
+    console.log("handle driver",route.driver);
+    console.log("handle driver",DriversData);
+    
+    setDriversData([...DriversData,{_id:route.driver.value,name:route.driver.label}]);
     setSelectedRoute(route);
     setActiveComponent("edit");
   };
@@ -163,13 +95,26 @@ const ManageRoutes = () => {
   const handleBack = () => {
     setActiveComponent("list");
     setSelectedRoute(null);
+    fetchRoutes()
+    fetchDriversdata()
   };
+  const [currentPage, setCurrentPage] = useState(1);
+  const routesPerPage = 10;
 
+  const indexOfLastRoute = currentPage * routesPerPage;
+  const indexOfFirstRoute = indexOfLastRoute - routesPerPage;
+  const currentRoutes = routes.slice(indexOfFirstRoute, indexOfLastRoute);
+
+  const totalPages = Math.ceil(routes.length / routesPerPage);
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
   // Rendered Content based on `activeComponent`
   return (
-    <div className="p-8 bg-gray-100 min-h-screen">
+    <div className="py-8 bg-gray-100 min-h-screen">
       {activeComponent === "list" && (
-        <div className="bg-white rounded-lg shadow-md p-6">
+        <div className="bg-white rounded-lg shadow-md p-6 min-h-screen">
           <h2 className="text-3xl text-center font-bold text-gray-800 mb-6">
             Route Management
           </h2>
@@ -179,49 +124,153 @@ const ManageRoutes = () => {
           >
             Add New Route
           </button>
-          <table className="w-full table-auto border-collapse">
-            <thead className="text-lg">
-              <tr className="bg-blue-600 text-white">
-                <th className="py-3 px-4 text-center">Route #</th>
-                <th className="py-3 px-4 text-center">Driver Name</th>
-                <th className="py-3 px-4 text-center">Bus #</th>
-                <th className="py-3 px-4 text-center">Stops</th>
-                <th className="py-3 px-4 text-center">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {routes.map((route, index) => (
-                <tr
-                  key={route.id}
-                  className={index % 2 === 0 ? "bg-gray-100" : "bg-gray-200"}
-                >
-                  <td className="py-3 px-4 text-center">{route.route_no}</td>
-                  <td className="py-3 px-4 text-center">{route.driver}</td>
-                  <td className="py-3 px-4 text-center">{route.vehicle_no}</td>
-                  <td className="py-3 px-4 text-center">
-                    {route.stops.length > 0
-                      ? `${route.stops[0].name} - ${
-                          route.stops[route.stops.length - 1].name
-                        }`
-                      : "No stops available"}
-                  </td>
-                  <td className="py-3 px-4 text-center">
-                    <button
-                      onClick={() => handleEdit(route)}
-                      className="bg-yellow-500 flex gap-1 items-center m-auto text-white py-2 px-4 rounded hover:bg-yellow-400 transition duration-300"
+          {loadingPage ? (
+            <SpanLoader />
+          ) : (
+         
+            <div className="w-full overflow-x-auto min-h-[70vh]">
+              <table className="w-full table-auto border-collapse">
+                <thead className="text-lg">
+                  <tr className="bg-blue-600 text-white">
+                  <th className="py-3 px-4 min-w-[100px] text-center">
+                        #
+                      </th>
+                    <th className="py-3 px-4 text-center min-w-[200px]">Route </th>
+                    <th className="py-3 px-4 text-center min-w-[200px]">Driver Name</th>
+                    <th className="py-3 px-4 text-center min-w-[140px]">Bus #</th>
+                    <th className="py-3 px-4 text-center min-w-[250px]">Stops</th>
+                    
+                    <th className="py-3 px-4 text-left w-[130px]">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {currentRoutes && currentRoutes.length>0 && currentRoutes.map((route, index) => (
+                    <tr
+                      key={route._id}
+                      className={
+                        index % 2 === 0 ? "bg-gray-100" : "bg-gray-200"
+                      }
                     >
-                      Edit <BiEditAlt className="text-white" />
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+                           <td className="py-3 px-4 min-w-[100px] text-center">
+                          {(index + 1)+((currentPage-1)*7)}
+                        </td>                    
+                      <td className="py-3 px-4 text-center">
+                        {route.route_no}
+                      </td>
+                      <td className="py-3 px-4 text-center">{route?.driver?.label}</td>
+                      <td className="py-3 px-4 text-center">
+                        {route.vehicle_no}
+                      </td>
+                      <td className="py-3 px-4 text-center">
+                        
+                      <div className=" group relative cursor-pointer">
+                        <span>
+                        {route?.stops?.length > 0
+                          ? `${route.stops[0].label} - ${
+                              route.stops[route.stops.length - 1].label
+                            }`
+                          : "No stops available"}
+                          </span>
+                          <div className="w-72  mb-2  text-left absolute hidden group-hover:block border border-gray-200   left-1/2 -translate-x-1/2   z-10  bg-white text-sm text-gray-600 rounded-xl shadow-md">
+                              <h5 className="mb-1 text-sm text-gray-900 font-medium  px-5 py-3 border-b border-gray-200">
+                                All Stops
+                              </h5>
+                              <p className="text-sm text-gray-600 font-normal px-5 py-3">
+                                <ul>
+                                    {route.stops.map((stop) => (
+                                        <li key={stop.value} className="list-disc list-inside">{stop.label}</li>
+                                    ))}
+                                </ul>
+                                {/* {complaint.complaint_description} */}
+                              </p>
+                            </div>
+                            </div>
+                      </td>
+                      <td className="py-5 relative my-auto px-4 flex items-center justify-center gap-2">
+                        <button
+                          onClick={() => handleEdit(route)}
+                          className="bg-yellow-500 flex gap-1 items-center m-auto text-white py-2 px-4 rounded hover:bg-yellow-400 transition duration-300"
+                        >
+                           <BiEditAlt className="text-white" />
+                        </button>
+                        <Modal
+                            requestData={{ route_id: route._id }}
+                            apikey={`${
+                              import.meta.env.VITE_BACKEND_URL
+                            }/api/admin/route/delete`}
+                            action={"delete"}
+                            ActionBtnText={"Delete Route"}
+                            displayBtnText={
+                              <div className=" flex gap-1 items-center">
+                                <MdDeleteOutline className="text-white" />
+                                
+                              </div>
+                            }
+                            title={"Delete Route"}
+                            children={
+                              <>
+                                Are you sure you want to delete the route Details ?
+                                All of your data will be{" "}
+                                <strong>permanently removed.</strong> This
+                                action cannot be<strong> undone.</strong>
+                              </>
+                            }
+                            reFetchData={fetchRoutes}
+                          />
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+              <div className="flex justify-between items-center mt-4 p-4 bg-white shadow relative bottom-0 left-0 right-0 ">
+            {/* Refresh Button */}
+            <button
+              onClick={fetchRoutes}
+              className="flex items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-300"
+            >
+              <LuRefreshCcwDot className="text-white" />
+              Refresh
+            </button>
+
+            {/* Pagination Controls */}
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+                className={`px-4 py-2 rounded ${currentPage === 1 ? 'bg-gray-300 text-gray-700 cursor-not-allowed' : 'bg-blue-600 text-white hover:bg-blue-700 transition duration-300'}`}
+              >
+                <GrChapterPrevious />
+              </button>
+              <span className="px-4 py-2">
+                Page {currentPage} of {totalPages}
+              </span>
+              <button
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage >= totalPages}
+                className={`px-4 py-2 rounded ${currentPage >= totalPages ? 'bg-gray-300 text-gray-700 cursor-not-allowed' : 'bg-blue-600 text-white hover:bg-blue-700 transition duration-300'}`}
+              >
+                <GrChapterNext />
+              </button>
+            </div>
+          </div>
         </div>
       )}
-      {activeComponent === "add" && <AddRouteForm  stops={StopsData} driver={DriversData}  onBack={handleBack} />}
+      {activeComponent === "add" && (
+        <AddRouteForm
+          stops={StopsData}
+          drivers={DriversData}
+          onBack={handleBack}
+        />
+      )}
       {activeComponent === "edit" && (
-        <EditRouteForm stops={StopsData} driver={DriversData} route={selectedRoute} onBack={handleBack} />
+        <EditRouteForm
+          stops={StopsData}
+          drivers={DriversData}
+          route={selectedRoute}
+          onBack={handleBack}
+        />
       )}
     </div>
   );

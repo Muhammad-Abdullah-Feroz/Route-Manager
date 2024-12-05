@@ -26,7 +26,7 @@ const ManageStops = () => {
  const fetchData=async()=>{
   setIsLoading(true);
   try {
-    const response= await axios.get(`${import.meta.env.VITE_LOCAL_BACKEND_URL}/api/admin/stop`);
+    const response= await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/admin/stop`);
     console.log(response.data);
     if(response.data.success){
       setStopsList(response.data.data)
@@ -92,10 +92,13 @@ const ManageStops = () => {
               <table className="w-full table-auto border-collapse">
                 <thead className="text-lg">
                   <tr className="bg-blue-600 text-white">
-                    <th className="py-3 px-4 text-left min-w-[200px]"></th>
-                    <th className="py-3 px-4 text-left min-w-[300px]">Driver Name</th>
+                  <th className="py-3 px-4 min-w-[100px] text-center">
+                        #
+                      </th>
+                    <th className="py-3 px-4 text-left min-w-[300px]">Stop Name</th>
                     <th className="py-3 px-4 text-left min-w-[140px]">Latitude</th>
                     <th className="py-3 px-4 text-left min-w-[140px]">Longitude</th>
+                    <th className="py-3 px-4 text-left w-[200px]">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -106,6 +109,15 @@ const ManageStops = () => {
                         index % 2 === 0 ? "bg-gray-100" : "bg-gray-200"
                       }
                     >
+                         <td className="py-3 px-4 min-w-[100px] text-center">
+                          {(index + 1)+((currentPage-1)*stopsPerPage)}
+                        </td>
+                   
+                      <td className="py-3 px-4 text-left">{stop.name}</td>
+                      <td className="py-3 px-4 text-left">{stop.latitude}</td>
+                      <td className="py-3 px-4 text-left">
+                        {stop.longitude}
+                      </td>
                       <td className="py-3 px-10 flex items-center justify-center ">
                         <button
                           onClick={() => onEditStop(stop)}
@@ -116,7 +128,7 @@ const ManageStops = () => {
                         <Modal
                             requestData={{ stop_id: stop._id }}
                             apikey={`${
-                              import.meta.env.VITE_LOCAL_BACKEND_URL
+                              import.meta.env.VITE_BACKEND_URL
                             }/api/admin/stop/delete`}
                             action={"delete"}
                             ActionBtnText={"Delete"}
@@ -137,12 +149,6 @@ const ManageStops = () => {
                             reFetchData={fetchData}
                           />
                       </td>
-                      <td className="py-3 px-4 text-left">{stop.name}</td>
-                      <td className="py-3 px-4 text-left">{stop.latitude}</td>
-                      <td className="py-3 px-4 text-left">
-                        {stop.longitude}
-                      </td>
-                      
                     </tr>
                   ))}
                 </tbody>

@@ -32,7 +32,7 @@ const AddStopForm = ({setIsFormPageState,FormPageState,stopDetails={name:'Uet Ks
     }
     console.log("Submitting the form data",MakeData);
     try {
-      const response= await axios.post(`${import.meta.env.VITE_LOCAL_BACKEND_URL}/api/admin/stop${!isAddNew?'/update-stop':'/add-stop'}`,MakeData);
+      const response= await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/admin/stop${!isAddNew?'/update-stop':'/add-stop'}`,MakeData);
       if(response.data.success){
         messageToast(response.data.msg);
         setTimeout(() => {

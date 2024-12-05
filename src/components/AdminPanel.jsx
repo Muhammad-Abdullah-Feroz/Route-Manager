@@ -15,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 const AdminPanel = () => {
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
   const navigate = useNavigate();
-  const [selectedView, setSelectedView] = useState(""); // state to track selected view
+  const [selectedView, setSelectedView] = useState("dashboard"); // state to track selected view
   const handleLogout = () => {
     if(window.confirm("Are you sure you want to logout?")){
     localStorage.removeItem("token");
@@ -50,12 +50,12 @@ const AdminPanel = () => {
           <div className="flex flex-1 overflow-x-auto">
            
             <aside
-              className={`relative mr-10 bg-gradient-to-b from-blue-800 via-blue-600 to-blue-600 text-white h-full transition-all duration-1000 ${
+              className={`relative  mr-10 bg-gradient-to-b from-blue-800 via-blue-600 to-blue-600 text-white h-full transition-all duration-1000 ${
                 isSidebarExpanded ? "w-56" : "w-16"
               }`}
             >
               <button
-                className=" absolute -right-7 top-3 flex items-center my-2 gap-2"
+                className={` absolute -right-7 top-3 flex items-center my-2 gap-2`}
                 onClick={()=>setIsSidebarExpanded(!isSidebarExpanded)}
               >
                 {isSidebarExpanded ? (
@@ -76,7 +76,7 @@ const AdminPanel = () => {
                     onClick={() => handleSidebarClick("dashboard")}
                     className={`cursor-pointer p-2 my-1 mx-3 rounded-md transition-all duration-1000 ${
                       isSidebarExpanded ? "" : "my-[20px]"
-                    }  hover:bg-blue-400`}
+                    }  hover:bg-blue-400 ${selectedView === "dashboard" ? "bg-blue-400" : ""}`}
                   >
                     <button className="flex items-center gap-2">
                       <AiOutlineDashboard
@@ -89,7 +89,7 @@ const AdminPanel = () => {
                     onClick={() => handleSidebarClick("manage-drivers")}
                     className={`cursor-pointer p-2 my-1 mx-3 rounded-md transition-all duration-1000 ${
                       isSidebarExpanded ? "" : "my-[20px]"
-                    }  hover:bg-blue-400`}
+                    }  hover:bg-blue-400  ${selectedView === "manage-drivers" ? "bg-blue-400" : ""}`}
                   >
                     <button className="flex items-center  gap-2">
                       {" "}
@@ -105,7 +105,7 @@ const AdminPanel = () => {
                     onClick={() => handleSidebarClick("manage-stops")}
                     className={`cursor-pointer p-2 my-1 mx-3 rounded-md transition-all duration-1000 ${
                       isSidebarExpanded ? "" : "my-[20px]"
-                    }  hover:bg-blue-400`}
+                    }  hover:bg-blue-400 ${selectedView === "manage-stops" ? "bg-blue-400" : ""}`}
                   >
                     <button className="flex items-center gap-2">
                       <BsStoplights
@@ -118,7 +118,7 @@ const AdminPanel = () => {
                     onClick={() => handleSidebarClick("manage-routes")}
                     className={`cursor-pointer p-2 my-1 mx-3 rounded-md transition-all duration-1000 ${
                       isSidebarExpanded ? "" : "my-[20px]"
-                    }  hover:bg-blue-400`}
+                    }  hover:bg-blue-400 ${selectedView === "manage-routes" ? "bg-blue-400" : ""}`}
                   >
                     <button className="flex items-center gap-2">
                       <MdOutlineDirectionsBus 
@@ -131,7 +131,7 @@ const AdminPanel = () => {
                     onClick={() => handleSidebarClick("manage-complaints")}
                     className={`cursor-pointer p-2 my-1 mx-3 rounded-md transition-all duration-1000 ${
                       isSidebarExpanded ? "" : "my-[20px]"
-                    }  hover:bg-blue-400`}
+                    }  hover:bg-blue-400 ${selectedView === "manage-complaints" ? "bg-blue-400" : ""}`}
                   >
                     <button className="flex items-center  gap-2">
                       <MdOutlineManageHistory
@@ -144,7 +144,7 @@ const AdminPanel = () => {
                     onClick={() => handleLogout()}
                     className={`cursor-pointer p-2 my-1 mx-3 rounded-md transition-all duration-1000 ${
                       isSidebarExpanded ? "" : "my-[20px]"
-                    }  hover:bg-blue-400`}
+                    }  hover:bg-blue-400 ${selectedView === "logout" ? "bg-blue-400" : ""}`}
                   >
                     <button className="flex items-center gap-2">
                       <BiLogOut

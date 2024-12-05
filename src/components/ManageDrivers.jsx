@@ -3,9 +3,10 @@ import { BiEditAlt } from "react-icons/bi";
 import SpanLoader from "./SpanLoader";
 import { LuRefreshCcwDot } from "react-icons/lu";
 import { GrChapterNext, GrChapterPrevious } from "react-icons/gr";
+import { BsDot } from "react-icons/bs";
 const ManageDrivers = ({ isLoading, drivers, onAddDriver, onEditDriver,FetchData }) => {
     const [currentPage, setCurrentPage] = useState(1);
-    const driversPerPage = 10;
+    const driversPerPage = 8;
   
     const indexOfLastDriver = currentPage * driversPerPage;
     const indexOfFirstDriver = indexOfLastDriver - driversPerPage;
@@ -35,14 +36,20 @@ const ManageDrivers = ({ isLoading, drivers, onAddDriver, onEditDriver,FetchData
             <table className="min-w-full table-auto border-collapse">
               <thead className="text-lg">
                 <tr className="bg-blue-600 text-white">
-                  <th className="py-3 px-4 text-center min-w-[120px]"></th>
+                <th className="py-3 px-4 min-w-[100px] text-center">
+                        #
+                      </th>
                   <th className="py-3 px-4 text-left min-w-[250px]"> Name</th>
                   <th className="py-3 px-4 text-left min-w-[250px]">Email</th>
+                  <th className="py-3 px-4 text-left min-w-[100px]">Available</th>
+
                   <th className="py-3 px-4 text-left min-w-[170px]">
                     Phone no
                   </th>
                   <th className="py-3 px-4 text-left min-w-[170px]">CNIC</th>
                   <th className="py-3 px-4 text-left min-w-[400px]">Address</th>
+                  
+                  <th className="py-3 px-4 text-center min-w-[120px]">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -51,19 +58,27 @@ const ManageDrivers = ({ isLoading, drivers, onAddDriver, onEditDriver,FetchData
                     key={driver._id}
                     className={index % 2 === 0 ? "bg-gray-100" : "bg-gray-200"}
                   >
-                    <td className="py-3 px-4 text-left min-w-[100px]">
-                      <button
-                        onClick={() => onEditDriver(driver)}
-                        className="bg-yellow-500 flex gap-1 items-center m-auto text-white py-2 px-4 rounded hover:bg-yellow-400 transition duration-300"
-                      >
-                         <BiEditAlt className="text-white" />
-                      </button>
-                    </td>
+                 <td className="py-3 px-4 min-w-[100px] text-center">
+                          {(index + 1)+((currentPage-1)*driversPerPage)}
+                        </td>
                     <td className="py-3 px-4 text-left min-w-[250px]">
                       {driver.name}
                     </td>
                     <td className="py-3 px-4 text-left min-w-[250px]">
                       {driver.email}
+                    </td>
+                    <td className="py-7 px-4 text-left min-w-[170px] flex items-center ">
+                    {!driver.isAvailable ? (
+                            <span className="bg-red-100 text-red-900 text-xs font-medium p-0.5 rounded  border border-red-800 flex  items-center">
+                              <BsDot  />
+                              on work
+                            </span>
+                          ) : (
+                            <span className="bg-blue-100 text-blue-800 text-xs font-medium p-0.5 rounded border border-blue-800 flex  items-center">
+                                  <BsDot  />
+                              available
+                            </span>
+                          )}
                     </td>
                     <td className="py-3 px-4 text-left min-w-[170px]">
                       {driver.phone}
@@ -73,6 +88,14 @@ const ManageDrivers = ({ isLoading, drivers, onAddDriver, onEditDriver,FetchData
                     </td>
                     <td className="py-3 px-4 text-left min-w-[400px]">
                       {driver.address}
+                    </td>
+                    <td className="py-3 px-4 text-left min-w-[100px]">
+                      <button
+                        onClick={() => onEditDriver(driver)}
+                        className="bg-yellow-500 flex gap-1 items-center m-auto text-white py-2 px-4 rounded hover:bg-yellow-400 transition duration-300"
+                      >
+                         <BiEditAlt className="text-white" />
+                      </button>
                     </td>
                     
                   </tr>

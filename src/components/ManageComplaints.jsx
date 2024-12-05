@@ -109,14 +109,11 @@ totalPages==0?1:totalPages;
             </>
           ) : (
             <>
-              <div className="w-full overflow-x-auto min-h-[70vh]">
+              <div className="w-full overflow-x-auto ">
                 <table className="min-w-full table-auto border-collapse">
                   {" "}
                   <thead className="text-lg">
                     <tr className="bg-blue-600 text-white">
-                      <th className="py-3 px-4 min-w-[120px] text-center">
-                        
-                      </th>
                       <th className="py-3 px-4 min-w-[100px] text-center">
                         #
                       </th>
@@ -133,6 +130,10 @@ totalPages==0?1:totalPages;
                       <th className="py-3 px-4 min-w-[200px] text-center">
                         Date
                       </th>
+                      
+                      <th className="py-3 px-4 min-w-[120px] text-center">
+                        Actions
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -143,61 +144,9 @@ totalPages==0?1:totalPages;
                           index % 2 === 0 ? "bg-gray-100" : "bg-gray-200"
                         }
                       >
-                         <td className="py-5 px-4 text-center flex justify-center items-center space-x-2">
-                          <Modal
-                            requestData={{ complaint_id: complaint._id }}
-                            apikey={`${
-                              import.meta.env.VITE_BACKEND_URL
-                            }/api/admin/complaint/update-status`}
-                            action={"update"}
-                            ActionBtnText={"Update Status"}
-                            displayBtnText={
-                              <div className=" flex gap-1 items-center">
-                                <BiEditAlt className="text-white" />
-                                
-                              </div>
-                            }
-                            title={"Update Complaint Status"}
-                            children={
-                              <>
-                                Are you sure you want to update the status of
-                                Complaint? Your current status is{" "}
-                                <strong>
-                                  {" "}
-                                  {complaint.isSolved ? "Aproved" : "Pending"}.
-                                </strong>
-                              </>
-                            }
-                            reFetchData={FetchData}
-                          />
-
-                          <Modal
-                            requestData={{ complaint_id: complaint._id }}
-                            apikey={`${
-                              import.meta.env.VITE_BACKEND_URL
-                            }/api/admin/complaint/delete`}
-                            action={"delete"}
-                            ActionBtnText={"Delete"}
-                            displayBtnText={
-                              <div className=" flex gap-1 items-center">
-                                <MdDeleteOutline className="text-white" />
-                                
-                              </div>
-                            }
-                            title={"Delete Complaint"}
-                            children={
-                              <>
-                                Are you sure you want to delete the complaint ?
-                                All of your data will be{" "}
-                                <strong>permanently removed.</strong> This
-                                action cannot be<strong> undone.</strong>
-                              </>
-                            }
-                            reFetchData={FetchData}
-                          />
-                        </td>
+                         
                         <td className="py-3 px-4 min-w-[100px] text-center">
-                          {(index + 1)+((currentPage-1)*7)}
+                          {(index + 1)+((currentPage-1)*complaintsPerPage)}
                         </td>
                         <td className=" pl-8 ">
                           {complaint.registration_no}
@@ -242,7 +191,58 @@ totalPages==0?1:totalPages;
                         <td className="py-3 px-4 text-center">
                          {formatDate(complaint.createdAt)}
                         </td>
-                       
+                        <td className="py-5 px-4 text-center flex justify-center items-center space-x-2">
+                          <Modal
+                            requestData={{ complaint_id: complaint._id }}
+                            apikey={`${
+                              import.meta.env.VITE_BACKEND_URL
+                            }/api/admin/complaint/update-status`}
+                            action={"update"}
+                            ActionBtnText={"Update Status"}
+                            displayBtnText={
+                              <div className=" flex gap-1 items-center">
+                                <BiEditAlt className="text-white" />
+                              </div>
+                            }
+                            title={"Update Complaint Status"}
+                            children={
+                              <>
+                                Are you sure you want to update the status of
+                                Complaint? Your current status is{" "}
+                                <strong>
+                                  {" "}
+                                  {complaint.isSolved ? "Aproved" : "Pending"}.
+                                </strong>
+                              </>
+                            }
+                            reFetchData={FetchData}
+                          />
+
+                          <Modal
+                            requestData={{ complaint_id: complaint._id }}
+                            apikey={`${
+                              import.meta.env.VITE_BACKEND_URL
+                            }/api/admin/complaint/delete`}
+                            action={"delete"}
+                            ActionBtnText={"Delete"}
+                            displayBtnText={
+                              <div className=" flex gap-1 items-center">
+                                <MdDeleteOutline className="text-white" />
+                                
+                              </div>
+                            }
+                            title={"Delete Complaint"}
+                            children={
+                              <>
+                                Are you sure you want to delete the complaint ?
+                                All of your data will be{" "}
+                                <strong>permanently removed.</strong> This
+                                action cannot be<strong> undone.</strong>
+                              </>
+                            }
+                            reFetchData={FetchData}
+                          />
+                        </td>
                       </tr>
                     ))}
                   </tbody>
