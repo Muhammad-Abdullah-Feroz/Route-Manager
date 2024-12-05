@@ -99,7 +99,7 @@ totalPages==0?1:totalPages;
               >
                 <option value="All">All</option>
                 <option value="pending">Pending</option>
-                <option value="rsolved">Resolved</option>
+                <option value="resolved">Resolved</option>
               </select>
             </div>
           </div>
