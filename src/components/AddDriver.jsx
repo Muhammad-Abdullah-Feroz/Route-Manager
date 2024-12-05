@@ -22,7 +22,7 @@ const [isLoading, setIsLoading] = useState(false);
     }
 
     try {
-        const response=await axios.post(`${import.meta.env.VITE_LOCAL_BACKEND_URL}/api/admin/driver/add-driver`,addData);
+        const response=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/admin/driver/add-driver`,addData);
         console.log(response);
         if(response.data.success){
             console.log('Driver added successfully');

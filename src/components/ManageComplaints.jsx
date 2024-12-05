@@ -109,7 +109,7 @@ totalPages==0?1:totalPages;
             </>
           ) : (
             <>
-              <div className="w-full overflow-x-auto">
+              <div className="w-full overflow-x-auto min-h-[70vh]">
                 <table className="min-w-full table-auto border-collapse">
                   {" "}
                   <thead className="text-lg">
@@ -118,7 +118,7 @@ totalPages==0?1:totalPages;
                         
                       </th>
                       <th className="py-3 px-4 min-w-[100px] text-center">
-                        ID
+                        #
                       </th>
                       <th className="py-3 px-4 min-w-[200px] text-left ">
                         Registration No.
@@ -143,7 +143,7 @@ totalPages==0?1:totalPages;
                           index % 2 === 0 ? "bg-gray-100" : "bg-gray-200"
                         }
                       >
-                         <td className="py-3 px-4 text-center flex justify-center space-x-2">
+                         <td className="py-5 px-4 text-center flex justify-center items-center space-x-2">
                           <Modal
                             requestData={{ complaint_id: complaint._id }}
                             apikey={`${
@@ -199,10 +199,10 @@ totalPages==0?1:totalPages;
                         <td className="py-3 px-4 min-w-[100px] text-center">
                           {(index + 1)+((currentPage-1)*7)}
                         </td>
-                        <td className="py-3 pl-8 ">
+                        <td className=" pl-8 ">
                           {complaint.registration_no}
                         </td>
-                        <td className="py-3 px-4 flex justify-center items-center">
+                        <td className=" px-4 flex justify-center items-center">
                           {!complaint.isSolved ? (
                             <span className="bg-red-100 text-red-900 text-xs font-medium px-1  py-0.5 rounded  border border-red-800 flex gap-1 items-center">
                               <MdPendingActions />

@@ -13,7 +13,7 @@ const ManageDriversContainer = () => {
     const fetchData=async()=>{
         setIsLoading(true);
         try {
-            const response = await axios.get(`${import.meta.env.VITE_LOCAL_BACKEND_URL}/api/admin/driver`);
+            const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/admin/driver`);
             console.log(response);
             
             if(response.data.success){

@@ -5,7 +5,7 @@ import { LuRefreshCcwDot } from "react-icons/lu";
 import { GrChapterNext, GrChapterPrevious } from "react-icons/gr";
 const ManageDrivers = ({ isLoading, drivers, onAddDriver, onEditDriver,FetchData }) => {
     const [currentPage, setCurrentPage] = useState(1);
-    const driversPerPage = 3;
+    const driversPerPage = 10;
   
     const indexOfLastDriver = currentPage * driversPerPage;
     const indexOfFirstDriver = indexOfLastDriver - driversPerPage;
@@ -31,7 +31,7 @@ const ManageDrivers = ({ isLoading, drivers, onAddDriver, onEditDriver,FetchData
         <SpanLoader />
       ) : (
         <>
-          <div className="w-full overflow-x-auto">
+          <div className="w-full overflow-x-auto min-h-[70vh]">
             <table className="min-w-full table-auto border-collapse">
               <thead className="text-lg">
                 <tr className="bg-blue-600 text-white">

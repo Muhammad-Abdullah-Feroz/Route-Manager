@@ -32,7 +32,7 @@ const EditDriver = ({ driver, onBack }) => {
     };
 
     try {
-        const response=await axios.post(`${import.meta.env.VITE_LOCAL_BACKEND_URL}/api/admin/driver/update-driver`,updatedata);
+        const response=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/admin/driver/update-driver`,updatedata);
         if(response.data.success){
             console.log(response);
             messageToast("Driver Updated Successfully");
