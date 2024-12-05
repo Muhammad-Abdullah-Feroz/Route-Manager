@@ -6,7 +6,8 @@ import { messageToast, messageToastError } from '../handlers/messageToast';
 
 import mainLogo from '../assets/logo.png'; 
 import { useForm } from 'react-hook-form';
-import { BiLeftArrow, BiLeftArrowAlt } from 'react-icons/bi';
+import {  BiLeftArrowAlt } from 'react-icons/bi';
+import SpanLoader from './SpanLoader';
 
 const ProfileSection = () => {
   
@@ -18,9 +19,11 @@ const ProfileSection = () => {
     phone_no: '',
     address: '',
   });
+  const [isLoading, setIsLoading] = useState(true);
   const [isEdit,setIsEdit]=useState(false)
 useEffect(() => {
   const fetchData = async() => {
+    setIsLoading(true);
     const token=localStorage.getItem('token')
     console.log(token);
     if (!token) {
@@ -50,6 +53,7 @@ useEffect(() => {
        console.log(Info,"register");
        
       }
+      setIsLoading(false);
     } catch (error) {
       messageToastError("Something went wrong, please login again");
       console.error(error);
@@ -159,42 +163,48 @@ const handleLogout=()=>{
       <>
           <div className="w-full bg-gray-100 p-8 ">
       <div className="bg-white  rounded-3xl shadow-lg max-w-4xl px-16 py-10 mx-auto">
-        {/* Profile Header */}
+        {isLoading?
+        <SpanLoader/>
+        :
+        (
+          <>
+          
+             {/* Profile Header */}
         <div className="flex flex-col items-center justify-center space-x-6 mt-6">
           
-      <img src={mainLogo} alt="Main Logo" className="h-30 w-48 mb-2 " />
-      <h2 className="text-3xl font-bold text-gray-800">Welcome, {Info.fullName}</h2>
-            <p className="text-lg text-gray-600">{Info.email}</p>
-        
-        </div>
-
-       
-
-        {/* Contact Info */}
-        <div className="mt-8">
-          <h3 className="text-2xl font-semibold text-gray-800 mb-4">Contact Information</h3>
-          <p className="text-gray-700 font-normal"><strong>Phone: </strong>{Info.phone_no}</p>
-          <p className="text-gray-700 font-normal"><strong>Address: </strong>{Info.address}</p>
-        </div>
-
-   
-        {/* Profile Actions */}
-        <div className="flex justify-center gap-8 mt-6">
-          <button 
-            className="flex items-center gap-2 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700"
-            onClick={() => setIsEdit(true)}
-          >
-            <FaEdit />
-            Edit Profile
-          </button>
-          <button 
-            className="flex items-center gap-2 bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700"
-            onClick={handleLogout}
-          >
-            <FaSignOutAlt />
-            Logout
-          </button>
-        </div>
+          <img src={mainLogo} alt="Main Logo" className="h-30 w-48 mb-2 " />
+          <h2 className="text-3xl font-bold text-gray-800">Welcome, {Info.fullName}</h2>
+                <p className="text-lg text-gray-600">{Info.email}</p>
+            
+            </div>
+            {/* Contact Info */}
+            <div className="mt-8">
+              <h3 className="text-2xl font-semibold text-gray-800 mb-4">Contact Information</h3>
+              <p className="text-gray-700 font-normal"><strong>Phone: </strong>{Info.phone_no}</p>
+              <p className="text-gray-700 font-normal"><strong>Address: </strong>{Info.address}</p>
+            </div>
+            {/* Profile Actions */}
+            <div className="flex justify-center gap-8 mt-6">
+              <button 
+                className="flex items-center gap-2 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700"
+                onClick={() => setIsEdit(true)}
+              >
+                <FaEdit />
+                Edit Profile
+              </button>
+              <button 
+                className="flex items-center gap-2 bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700"
+                onClick={handleLogout}
+              >
+                <FaSignOutAlt />
+                Logout
+              </button>
+            </div>
+          
+          </>
+        )
+      }
+     
 
       
       </div>

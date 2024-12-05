@@ -9,6 +9,7 @@ import Modal from "./Modal";
 import SpanLoader from "./SpanLoader";
 import { LuRefreshCcwDot } from "react-icons/lu";
 import { GrChapterNext, GrChapterPrevious } from "react-icons/gr";
+import formatDate from "../handlers/format-date";
 const ManageComplaint = () => {
   const [complaints, setComplaints] = useState([]);
   const [FilterData, setFilterData] = useState("All");
@@ -113,23 +114,24 @@ totalPages==0?1:totalPages;
                   {" "}
                   <thead className="text-lg">
                     <tr className="bg-blue-600 text-white">
+                      <th className="py-3 px-4 min-w-[120px] text-center">
+                        
+                      </th>
                       <th className="py-3 px-4 min-w-[100px] text-center">
                         ID
                       </th>
                       <th className="py-3 px-4 min-w-[200px] text-left ">
                         Registration No.
                       </th>
-                      <th className="py-3 px-4 min-w-[300px] text-left">
-                        Description
-                      </th>
                       <th className="py-3 px-4 min-w-[150px] text-center">
                         Status
                       </th>
+                      <th className="py-3 px-4 min-w-[300px] text-left">
+                        Description
+                      </th>
+               
                       <th className="py-3 px-4 min-w-[200px] text-center">
                         Date
-                      </th>
-                      <th className="py-3 px-4 min-w-[250px] text-center">
-                        Actions
                       </th>
                     </tr>
                   </thead>
@@ -141,52 +143,7 @@ totalPages==0?1:totalPages;
                           index % 2 === 0 ? "bg-gray-100" : "bg-gray-200"
                         }
                       >
-                        <td className="py-3 px-4 min-w-[100px] text-center">
-                          {(index + 1)+((currentPage-1)*7)}
-                        </td>
-                        <td className="py-3 pl-8 ">
-                          {complaint.registration_no}
-                        </td>
-                        <td className="py-3 px-4  max-w-[400px] cursor-pointer">
-                          {/* popover code  */}
-                          <div className=" group relative">
-                            <span>
-                              {complaint.complaint_description.length > 50
-                                ? `${complaint.complaint_description.substring(
-                                    0,
-                                    50
-                                  )}...`
-                                : complaint.complaint_description}
-                            </span>
-                            <div className="w-72  mb-2  text-left absolute hidden group-hover:block border border-gray-200   left-1/2 -translate-x-1/2   z-10  bg-white text-sm text-gray-600 rounded-xl shadow-md">
-                              <h5 className="mb-1 text-sm text-gray-900 font-medium  px-5 py-3 border-b border-gray-200">
-                                Descritption
-                              </h5>
-                              <p className="text-sm text-gray-600 font-normal px-5 py-3">
-                                {complaint.complaint_description}
-                              </p>
-                            </div>
-                          </div>
-
-                          {/* to there is popover code  */}
-                        </td>
-                        <td className="py-3 px-4 flex justify-center items-center">
-                          {!complaint.isSolved ? (
-                            <span className="bg-red-100 text-red-900 text-xs font-medium px-1  py-0.5 rounded  border border-red-800 flex gap-1 items-center">
-                              <MdPendingActions />
-                              pending
-                            </span>
-                          ) : (
-                            <span className="bg-blue-100 text-blue-800 text-xs font-medium px-1 py-0.5 rounded border border-blue-800 flex gap-1 items-center">
-                              <AiOutlineFileDone />
-                              resolved
-                            </span>
-                          )}
-                        </td>
-                        <td className="py-3 px-4 text-center">
-                          {complaint.createdAt}
-                        </td>
-                        <td className="py-3 px-4 text-center flex justify-center space-x-2">
+                         <td className="py-3 px-4 text-center flex justify-center space-x-2">
                           <Modal
                             requestData={{ complaint_id: complaint._id }}
                             apikey={`${
@@ -197,7 +154,7 @@ totalPages==0?1:totalPages;
                             displayBtnText={
                               <div className=" flex gap-1 items-center">
                                 <BiEditAlt className="text-white" />
-                                Update
+                                
                               </div>
                             }
                             title={"Update Complaint Status"}
@@ -224,7 +181,7 @@ totalPages==0?1:totalPages;
                             displayBtnText={
                               <div className=" flex gap-1 items-center">
                                 <MdDeleteOutline className="text-white" />
-                                Delete
+                                
                               </div>
                             }
                             title={"Delete Complaint"}
@@ -239,6 +196,53 @@ totalPages==0?1:totalPages;
                             reFetchData={FetchData}
                           />
                         </td>
+                        <td className="py-3 px-4 min-w-[100px] text-center">
+                          {(index + 1)+((currentPage-1)*7)}
+                        </td>
+                        <td className="py-3 pl-8 ">
+                          {complaint.registration_no}
+                        </td>
+                        <td className="py-3 px-4 flex justify-center items-center">
+                          {!complaint.isSolved ? (
+                            <span className="bg-red-100 text-red-900 text-xs font-medium px-1  py-0.5 rounded  border border-red-800 flex gap-1 items-center">
+                              <MdPendingActions />
+                              pending
+                            </span>
+                          ) : (
+                            <span className="bg-blue-100 text-blue-800 text-xs font-medium px-1 py-0.5 rounded border border-blue-800 flex gap-1 items-center">
+                              <AiOutlineFileDone />
+                              resolved
+                            </span>
+                          )}
+                        </td>
+                        <td className="py-3 px-4  max-w-[400px] cursor-pointer">
+                          {/* popover code  */}
+                          <div className=" group relative">
+                            <span>
+                              {complaint.complaint_description.length > 50
+                                ? `${complaint.complaint_description.substring(
+                                    0,
+                                    50
+                                  )}...`
+                                : complaint.complaint_description}
+                            </span>
+                            <div className="w-72  mb-2  text-left absolute hidden group-hover:block border border-gray-200   left-1/2 -translate-x-1/2   z-10  bg-white text-sm text-gray-600 rounded-xl shadow-md">
+                              <h5 className="mb-1 text-sm text-gray-900 font-medium  px-5 py-3 border-b border-gray-200">
+                                Descritption
+                              </h5>
+                              <p className="text-sm text-gray-600 font-normal px-5 py-3">
+                                {complaint.complaint_description}
+                              </p>
+                            </div>
+                          </div>
+
+                          {/* to there is popover code  */}
+                        </td>
+                     
+                        <td className="py-3 px-4 text-center">
+                         {formatDate(complaint.createdAt)}
+                        </td>
+                       
                       </tr>
                     ))}
                   </tbody>

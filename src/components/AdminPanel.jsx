@@ -50,7 +50,7 @@ const AdminPanel = () => {
           <div className="flex flex-1 overflow-x-auto">
            
             <aside
-              className={`relative mr-10 bg-gradient-to-b from-blue-800 via-blue-600 to-blue-600 text-white h-full transition-all duration-300 ${
+              className={`relative mr-10 bg-gradient-to-b from-blue-800 via-blue-600 to-blue-600 text-white h-full transition-all duration-1000 ${
                 isSidebarExpanded ? "w-56" : "w-16"
               }`}
             >
@@ -74,33 +74,20 @@ const AdminPanel = () => {
                 <ul>
                   <li
                     onClick={() => handleSidebarClick("dashboard")}
-                    className={`cursor-pointer p-2 my-1 mx-3 rounded-md ${
+                    className={`cursor-pointer p-2 my-1 mx-3 rounded-md transition-all duration-1000 ${
                       isSidebarExpanded ? "" : "my-[20px]"
                     }  hover:bg-blue-400`}
                   >
                     <button className="flex items-center gap-2">
                       <AiOutlineDashboard
-                        className={`${isSidebarExpanded ? "size-4" : "size-6"}`}
+                        className={`${isSidebarExpanded ? "size-4 " : "size-6"}`}
                       />
                       {isSidebarExpanded && <span>Dashboard</span>}
                     </button>
                   </li>
                   <li
-                    onClick={() => handleSidebarClick("manage-routes")}
-                    className={`cursor-pointer p-2 my-1 mx-3 rounded-md ${
-                      isSidebarExpanded ? "" : "my-[20px]"
-                    }  hover:bg-blue-400`}
-                  >
-                    <button className="flex items-center gap-2">
-                      <MdOutlineDirectionsBus 
-                        className={`${isSidebarExpanded ? "size-4" : "size-6"}`}
-                      />
-                      {isSidebarExpanded && <span> Routes</span>}
-                    </button>
-                  </li>
-                  <li
                     onClick={() => handleSidebarClick("manage-drivers")}
-                    className={`cursor-pointer p-2 my-1 mx-3 rounded-md ${
+                    className={`cursor-pointer p-2 my-1 mx-3 rounded-md transition-all duration-1000 ${
                       isSidebarExpanded ? "" : "my-[20px]"
                     }  hover:bg-blue-400`}
                   >
@@ -112,9 +99,11 @@ const AdminPanel = () => {
                       {isSidebarExpanded && <span> Drivers</span>}
                     </button>
                   </li>
+       
+           
                   <li
                     onClick={() => handleSidebarClick("manage-stops")}
-                    className={`cursor-pointer p-2 my-1 mx-3 rounded-md ${
+                    className={`cursor-pointer p-2 my-1 mx-3 rounded-md transition-all duration-1000 ${
                       isSidebarExpanded ? "" : "my-[20px]"
                     }  hover:bg-blue-400`}
                   >
@@ -126,8 +115,21 @@ const AdminPanel = () => {
                     </button>
                   </li>
                   <li
+                    onClick={() => handleSidebarClick("manage-routes")}
+                    className={`cursor-pointer p-2 my-1 mx-3 rounded-md transition-all duration-1000 ${
+                      isSidebarExpanded ? "" : "my-[20px]"
+                    }  hover:bg-blue-400`}
+                  >
+                    <button className="flex items-center gap-2">
+                      <MdOutlineDirectionsBus 
+                        className={`${isSidebarExpanded ? "size-4" : "size-6"}`}
+                      />
+                      {isSidebarExpanded && <span className=""> Routes</span>}
+                    </button>
+                  </li>
+                  <li
                     onClick={() => handleSidebarClick("manage-complaints")}
-                    className={`cursor-pointer p-2 my-1 mx-3 rounded-md ${
+                    className={`cursor-pointer p-2 my-1 mx-3 rounded-md transition-all duration-1000 ${
                       isSidebarExpanded ? "" : "my-[20px]"
                     }  hover:bg-blue-400`}
                   >
@@ -140,7 +142,7 @@ const AdminPanel = () => {
                   </li>
                   <li
                     onClick={() => handleLogout()}
-                    className={`cursor-pointer p-2 my-1 mx-3 rounded-md ${
+                    className={`cursor-pointer p-2 my-1 mx-3 rounded-md transition-all duration-1000 ${
                       isSidebarExpanded ? "" : "my-[20px]"
                     }  hover:bg-blue-400`}
                   >
