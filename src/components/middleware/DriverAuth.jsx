@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { messageToastError } from '../../handlers/messageToast';
+// import { messageToastError } from '../../handlers/messageToast';
 import Loading from '../Loading';
 
-const AdminAuthMiddleware = ({ children }) => {
+const DriverAuthMiddleware = ({ children }) => {
   const navigate = useNavigate();
   const [isLoading,setIsLoading]=useState(true);
 
@@ -13,18 +13,18 @@ const AdminAuthMiddleware = ({ children }) => {
       setIsLoading(true);
       const token = localStorage.getItem('token');
       if (!token) {
-        navigate('/admin/auth/login');
+        navigate('/driver/auth/login');
         return;
       }
 
       try {
-        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/admin/_t/${ token }`);
+        const response = await axios.get(`${import.meta.env.VITE_LOCAL_BACKEND_URL}/api/driver/_d/${ token }`);
         console.log(response.data);
         
         if (!response.data.success) {
           localStorage.removeItem('token');
           // messageToastError("Something went wrong! Please login Again To Continue")
-            navigate('/admin/auth/login');
+            navigate('/driver/auth/login');
         }
         
         if(response.data.success){
@@ -34,7 +34,7 @@ const AdminAuthMiddleware = ({ children }) => {
       } catch (error) {
         localStorage.removeItem('token');
         // messageToastError("Something went wrong! Please login Again To Continue")
-        navigate('/admin/auth/login');
+        navigate('/driver/auth/login');
       }
     };
 
@@ -50,4 +50,4 @@ const AdminAuthMiddleware = ({ children }) => {
 
 };
 
-export default AdminAuthMiddleware;
+export default DriverAuthMiddleware;
