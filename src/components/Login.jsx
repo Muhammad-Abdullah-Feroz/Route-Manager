@@ -59,7 +59,10 @@ const Login = () => {
     }
 
     return (
-        <div className="relative flex justify-center items-center min-w-full h-screen bg-white/70 backdrop-blur-lg border border-white/20 ">
+        <>       
+        <button onClick={()=>navigate('/admin/auth/lgoin')}>admin login</button>
+        
+         <div className="relative flex justify-center items-center min-w-full h-screen bg-white/70 backdrop-blur-lg border border-white/20 ">
             {/* Background Image */}
             {/* <div className="absolute w-full h-full z-0 overflow-hidden">
                 <img src={bgImage} alt="Background" className="object-cover w-full h-full" />
@@ -144,6 +147,8 @@ const Login = () => {
                 </form>
             </div>
         </div>
+        </>
+
     )
 }
 

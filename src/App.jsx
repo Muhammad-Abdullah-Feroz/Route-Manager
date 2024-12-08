@@ -18,6 +18,9 @@ import UserAuthMiddleware from './components/middleware/UserAuth'
 import ResetPassword from './components/ResetPassword'
 import AdminLogIn from './components/AdminLogIn'
 import AdminAuthMiddleware from './components/middleware/AdminAuth'
+import DriverAuthMiddleware from './components/middleware/DriverAuth'
+import DriverDashboard from './components/driver/DriverDashboard'
+import LogInDriver from './components/driver/LoginDriver'
 
 function App() {
   const router = createBrowserRouter([
@@ -73,6 +76,15 @@ function App() {
       path: '/complaint',
       element: <><Navbar/><Complaint /></>
     },
+    {
+      path: '/driver/auth/login',
+      element:<LogInDriver/>
+    },
+
+    {
+      path:'/_driver/driver-dashboard',
+      element:<DriverAuthMiddleware><DriverDashboard/></DriverAuthMiddleware>
+    }
 
    
 
