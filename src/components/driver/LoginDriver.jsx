@@ -23,7 +23,7 @@ const LogInDriver = () => {
         cnic:data.cnic
        }
 try {
-  const response=await axios.post(`${import.meta.env.VITE_LOCAL_BACKEND_URL}/api/driver/login`,LogInData)
+  const response=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/driver/login`,LogInData)
    console.log(response.data);
   if(response.data.success){
     localStorage.setItem('token',response.data.token)

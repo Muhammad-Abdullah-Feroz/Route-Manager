@@ -1,8 +1,9 @@
 import React from 'react'
+import Viewer from './GPS/ViewerSideGPS'
 
 const Tracking = () => {
   return (
-    <div>Tracking</div>
+    <div className='relative left-0 -z-0'><Viewer/></div>
   )
 }
 

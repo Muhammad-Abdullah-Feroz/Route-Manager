@@ -1,8 +1,13 @@
 import React from 'react'
+import GPSSharing from '../GPS/GPSSharing'
 
 const DriverDashboard = () => {
   return (
-    <div>DriverDashboard</div>
+    <div>DriverDashboard
+
+
+      <GPSSharing/>
+    </div>
   )
 }
 

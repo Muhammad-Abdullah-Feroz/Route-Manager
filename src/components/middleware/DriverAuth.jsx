@@ -18,7 +18,7 @@ const DriverAuthMiddleware = ({ children }) => {
       }
 
       try {
-        const response = await axios.get(`${import.meta.env.VITE_LOCAL_BACKEND_URL}/api/driver/_d/${ token }`);
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/driver/_d/${ token }`);
         console.log(response.data);
         
         if (!response.data.success) {

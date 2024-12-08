@@ -11,6 +11,7 @@ import { BsStoplights } from "react-icons/bs";
 import { GoSidebarCollapse, GoSidebarExpand } from "react-icons/go";
 import { AiOutlineDashboard } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
+import Viewer from "./GPS/ViewerSideGPS";
 
 const AdminPanel = () => {
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
@@ -29,9 +30,9 @@ const AdminPanel = () => {
 
   return (
    
-        <div className="h-screen overflow-hidden flex flex-col bg-gray-100">
+        <div className="h-screen overflow-hidden flex flex-col bg-gray-100 -z-10">
           {/* Navbar */}
-          <header className="bg-blue-600 text-white py-4 px-6 flex justify-between items-center">
+          <header className="bg-blue-600 text-white py-4 px-6 flex justify-between items-center -z-0">
           <div className="logo text-2xl font-extrabold text-white drop-shadow-lg">
                     Admin Panel
                 </div>
@@ -47,10 +48,10 @@ const AdminPanel = () => {
           </header>
 
           {/* Main Content */}
-          <div className="flex flex-1 overflow-x-auto">
+          <div className="flex flex-1 overflow-x-auto z-30">
            
             <aside
-              className={`relative  mr-10 bg-gradient-to-b from-blue-800 via-blue-600 to-blue-600 text-white h-full transition-all duration-1000 ${
+              className={`relative  mr-8 bg-gradient-to-b from-blue-800 via-blue-600 to-blue-600 text-white h-full transition-all z-30 duration-1000 ${
                 isSidebarExpanded ? "w-56" : "w-16"
               }`}
             >
@@ -160,6 +161,7 @@ const AdminPanel = () => {
             {/* Dashboard Content */}
             <main className="flex-1 p-6 bg-gray-100 overflow-y-auto">
               {/* Conditionally render content based on selected view */}
+              {selectedView === "dashboard" &&     <div className='relative left-0 -z-0'><Viewer/></div>}
               {selectedView === "manage-routes" && <ManageRoutes />}
               {selectedView === "manage-drivers" && <ManageDriversContainer />}
               {selectedView === "manage-stops" && <ManageStops />}
