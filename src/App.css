@@ -107,9 +107,16 @@ html{
   }
 }
 
+.leaflet-popup-close-button {
+  display: none;
+}
 
 
-
+/* .leaflet-control-zoom {
+  position: absolute;
+ bottom: 20vh;
+  right: 20px ;
+} */
 
 
 
@@ -219,3 +226,32 @@ html{
   }
  }
  
+
+
+
+ /* For Webkit-based browsers (Chrome, Edge, Safari) */
+::-webkit-scrollbar {
+  width: 12px; /* Width of the scrollbar */
+  height: 12px; /* Height for horizontal scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background: #f0f0f0; /* Background of the scrollbar track */
+  border-radius: 6px; /* Rounded corners for the track */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888; /* Scrollbar thumb color */
+  border-radius: 6px; /* Rounded corners for the thumb */
+  border: 3px solid #f0f0f0; /* Adds padding-like effect */
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Darker thumb color on hover */
+}
+
+/* For Firefox */
+* {
+  scrollbar-width: thin; /* Makes the scrollbar thinner */
+  scrollbar-color: #888 #f0f0f0; /* Thumb and track colors */
+}
