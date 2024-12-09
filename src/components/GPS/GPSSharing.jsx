@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import io from "socket.io-client";
-import { messageToastError } from "../../handlers/messageToast";
+// import io from "socket.io-client";
+// import { messageToastError } from "../../handlers/messageToast";
 import markerPng from '../../assets/marker.png'
+import axios from "axios";
 
-const SOCKET_SERVER_URL = import.meta.env.VITE_BACKEND_URL;
+// const SOCKET_SERVER_URL = import.meta.env.VITE_BACKEND_URL;
 
 // Custom marker icons
 const customMarkerIcon = new L.Icon({
@@ -33,76 +34,56 @@ const UpdateMapCenter = ({ location }) => {
 };
 
 const GPSSharing = () => {
-  const [socket, setSocket] = useState(null);
   const [location, setLocation] = useState({ latitude: 31.6943, longitude: 74.2472 });
-  const token = localStorage.getItem("token");
+  // const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (!token) {
-      messageToastError("Token not found in localStorage. Please login again.");
-      return;
+    let watchId;
+
+    // Function to send location updates to the backend
+    const sendLocationUpdate = async(location) => {
+      const repsonse=await axios.post("http://localhost:1096/", { token: localStorage.getItem("token"), location })
+      console.log(repsonse,"respoint");
+      
+      if(repsonse.status == 200) {
+        console.log("Location updated successfully");
+      } else {
+        console.error("Error updating location");
+      }
+   
     }
 
-    // Initialize socket connection
-    const newSocket = io(SOCKET_SERVER_URL, {
-      transports: ["websocket"],
-    });
-    setSocket(newSocket);
 
-    newSocket.on("connect", () => {
-      console.log("Connected to server");
-      newSocket.emit("driver_id", { token });
-    });
-
-    newSocket.on("error", (error) => {
-      console.error("Socket error:", error);
-      messageToastError("Socket connection error.");
-    });
-
-    return () => {
-      newSocket.disconnect();
-    };
-  }, [token]);
-
-  useEffect(() => {
-    if (!socket) return;
-
-    let intervalId;
-
-    const updateLocation = () => {
+    // Function to get live location using Geolocation API
+    const startTracking = () => {
       if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
+        watchId = navigator.geolocation.watchPosition(
           (position) => {
             const { latitude, longitude } = position.coords;
-
-            // Only update if location changes
-            if (
-              location.latitude !== latitude ||
-              location.longitude !== longitude
-            ) {
-              setLocation({ latitude, longitude });
-              console.log("Sending location:", { token, location: { latitude, longitude } });
-              socket.emit("driverLocation", { token, location: { latitude, longitude } });
-            }
+            const newLocation = { latitude, longitude };
+            setLocation(newLocation);
+            sendLocationUpdate(newLocation);
           },
-          (error) => {
-            console.error("Error fetching location:", error);
-            messageToastError("Error fetching location.");
+          (err) => {
+            setError(err.message);
+            console.error("Error fetching location:", err.message);
           },
-          { enableHighAccuracy: true }
+          { enableHighAccuracy: true, maximumAge: 0 }
         );
       } else {
-        messageToastError("Geolocation is not supported by this browser.");
+        setError("Geolocation is not supported by your browser.");
       }
     };
 
-    // Update location every 5 to 7 seconds
-    intervalId = setInterval(updateLocation, Math.random() * (7000 - 5000) + 5000);
+    startTracking();
 
+    // Cleanup geolocation watch on component unmount
     return () => {
-      clearInterval(intervalId); // Clean up interval on unmount
+      if (navigator.geolocation && watchId !== undefined) {
+        navigator.geolocation.clearWatch(watchId);
+      }
     };
-  }, [socket, location, token]);
+  }, []);
 
   return (
     <div className="h-screen w-screen">
