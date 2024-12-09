@@ -42,7 +42,7 @@ const GPSSharing = () => {
 
     // Function to send location updates to the backend
     const sendLocationUpdate = async(location) => {
-      const repsonse=await axios.post("http://localhost:1096/", { token: localStorage.getItem("token"), location })
+      const repsonse=await axios.post(import.meta.env.VITE_BACKEND_URL, { token: localStorage.getItem("token"), location })
       console.log(repsonse,"respoint");
       
       if(repsonse.status == 200) {

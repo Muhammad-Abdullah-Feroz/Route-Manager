@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { messageToast, messageToastError } from "../handlers/messageToast";
 import Bttn from "./Bttn";
+import SpanLoader from "./SpanLoader";
 
 const Modal = ({ requestData,apikey,displayBtnText,ActionBtnText,title, children,action,reFetchData }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,6 +11,7 @@ const Modal = ({ requestData,apikey,displayBtnText,ActionBtnText,title, children
   const closeModal = () => setIsOpen(false);
   const [loading, setLoading] = useState(false);
   const actionBtnMethod = async() => {
+    setLoading(true);
       console.log("Action Button Clicked");
       console.log(requestData,apikey);
       try {
@@ -19,6 +21,7 @@ const Modal = ({ requestData,apikey,displayBtnText,ActionBtnText,title, children
         if(response.data.success){
           messageToast(`Success,${response.data.msg}`);
           reFetchData();
+          setIsOpen(false);
         }else{
             messageToastError(`Error,${response.data.msg}`);
             }
@@ -35,6 +38,8 @@ setTimeout(() => {
 
   return (
     <>
+    {/* {loading&&<div className="absolute inset-0 flex items-center justify-center">
+      <SpanLoader/></div>} */}
       <button
         onClick={openModal}
         className={`text-white px-4 py-2 rounded ${action== 'delete'?'bg-red-600 hover:bg-red-500':'bg-yellow-500 hover:bg-yellow-400'} transition duration-300`}

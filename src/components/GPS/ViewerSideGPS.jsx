@@ -79,12 +79,12 @@ const Viewer = () => {
   );
 
   const handleSuggestionClick = async (stop) => {
-    MapCenter(stop.latitude, stop.longitude);
+    // MapCenter(stop.latitude, stop.longitude);
     console.log(stop, "stop");
     // set
     try {
       const response = await axios.get(
-        `${import.meta.env.VITE_LOCAL_BACKEND_URL}/api/routes-by-stop/${
+        `${import.meta.env.VITE_BACKEND_URL}/api/routes-by-stop/${
           stop._id
         }`
       );
@@ -105,9 +105,9 @@ const Viewer = () => {
     setIsModalOpen(false);
   };
 
-  const MapCenter = (lat, long) => {
-    setLocation({ latitude: lat, longitude: long });
-  };
+  // const MapCenter = (lat, long) => {
+  //   setLocation({ latitude: lat, longitude: long });
+  // };
   return (
     <>
       <div className="relative h-[89vh] w-[90.2vw] overflow-hidden">
@@ -153,7 +153,7 @@ const Viewer = () => {
           )}
         </div>
         <MapContainer
-          center={[location.latitude, location.longitude]} // Default map center
+          center={[31.6935, 74.2472]} // Default map center
           zoom={13}
           scrollWheelZoom={true}
           id="MPCONATINER"
