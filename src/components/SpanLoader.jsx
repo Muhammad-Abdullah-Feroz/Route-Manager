@@ -1,10 +1,11 @@
-import React from "react";
-import styled from "styled-components";
 
-const SpanLoader = () => {
+import styled from "styled-components";
+import PropTypes from 'prop-types';
+
+const SpanLoader = ({height}) => {
   return (
     <StyledWrapper>
-      <div className="flex justify-center items-center  h-[80vh]">
+      <div className={`flex justify-center items-center  h-[${height?height:'80vh'}]`}>
         <div className="loading ">
           <span />
           <span />
@@ -73,5 +74,8 @@ const StyledWrapper = styled.div`
     }
   }
 `;
+SpanLoader.propTypes = {
+  height: PropTypes.string,
+};
 
 export default SpanLoader;

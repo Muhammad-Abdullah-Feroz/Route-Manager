@@ -1,4 +1,5 @@
-import React from "react";
+
+import PropTypes from "prop-types";
 import { GiPathDistance } from "react-icons/gi";
 import { AiOutlineClose } from "react-icons/ai";
 import { BiErrorCircle } from "react-icons/bi";
@@ -55,5 +56,16 @@ const RouteModal = ({ showModal, onClose, routes }) => {
     </div>
   );
 };
+RouteModal.propTypes = {
+  showModal: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  routes: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+    })
+  ).isRequired,
+};
 
 export default RouteModal;
+

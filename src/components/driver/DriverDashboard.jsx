@@ -1,4 +1,4 @@
-import React from 'react'
+
 import GPSSharing from '../GPS/GPSSharing'
 
 const DriverDashboard = () => {

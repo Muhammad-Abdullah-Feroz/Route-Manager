@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { BiLogOut, BiMessageSquareError } from 'react-icons/bi';
 import { useNavigate } from 'react-router-dom';
 import UserDashboard from './UserDashboard';
@@ -12,6 +12,7 @@ import { BsPerson } from 'react-icons/bs';
 import { GoSidebarCollapse, GoSidebarExpand } from 'react-icons/go';
 import { GrMapLocation } from 'react-icons/gr';
 import Tracking from './Tracking';
+import Chatbox from './chatbox';
 
 const UserPanel = () => {
   const [selectedView, setSelectedView] = useState('dashboard'); // Default view is Dashboard
@@ -71,6 +72,7 @@ const UserPanel = () => {
                   <BiLogOut className={`${isSidebarExpanded?'size-4':'size-6'}`}/>{isSidebarExpanded && <span>Logout</span>} 
                 </button>
               </li>
+              
             </ul>
           </nav>
         </aside>
@@ -83,6 +85,7 @@ const UserPanel = () => {
           {selectedView === 'routes' && <ViewRoutes />}
           {selectedView === 'logComplaint' && <LogComplaint />}
           {selectedView === 'profile' && <Profile />}
+          <Chatbox />
         </main>
       </div>
     </div>
