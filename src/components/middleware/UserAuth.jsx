@@ -6,6 +6,7 @@ import Loading from "../Loading";
 const UserAuthMiddleware = ({ children }) => {
   const navigate = useNavigate();
   const [isLoad, setIsLoad ] = useState(true);
+  const [userData, setUserData] = useState(null);
 
   useEffect(() => {
     const checkToken = async () => {
@@ -27,6 +28,7 @@ const UserAuthMiddleware = ({ children }) => {
           navigate("/user/auth/login");
         } else {
           console.log(response.data.data);
+          setUserData(response.data.data);
           setIsLoad(false);
         }
       } catch (error) {
@@ -41,7 +43,8 @@ const UserAuthMiddleware = ({ children }) => {
   if (isLoad) {
     return <Loading />;
   } else {
-    return children;
+    return React.cloneElement(children, { userData: userData });
+    // return children;
   }
 };
 

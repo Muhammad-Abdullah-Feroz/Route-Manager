@@ -4,9 +4,11 @@ import axios from 'axios';
 // import { messageToastError } from '../../handlers/messageToast';
 import Loading from '../Loading';
 
+// eslint-disable-next-line react/prop-types
 const DriverAuthMiddleware = ({ children }) => {
   const navigate = useNavigate();
   const [isLoading,setIsLoading]=useState(true);
+  const [driverData,setDriverData]=useState(null);
 
   useEffect(() => {
     const checkToken = async () => {
@@ -29,9 +31,10 @@ const DriverAuthMiddleware = ({ children }) => {
         
         if(response.data.success){
           console.log(response.data.data);
+          setDriverData(response.data.data);
           setIsLoading(false);
         }
-      } catch (error) {
+      } catch (err) {
         localStorage.removeItem('token');
         // messageToastError("Something went wrong! Please login Again To Continue")
         navigate('/driver/auth/login');
@@ -45,7 +48,7 @@ const DriverAuthMiddleware = ({ children }) => {
     return <Loading/>
   }else{
     
-    return children;
+    return React.cloneElement(children, { driverData });
   }
 
 };

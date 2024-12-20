@@ -9,7 +9,7 @@ import Modal from "./Modal";
 import SpanLoader from "./SpanLoader";
 import { LuRefreshCcwDot } from "react-icons/lu";
 import { GrChapterNext, GrChapterPrevious } from "react-icons/gr";
-import formatDate from "../handlers/format-date";
+import {formatDate} from "../handlers/format-date";
 const ManageComplaint = () => {
   const [complaints, setComplaints] = useState([]);
   const [FilterData, setFilterData] = useState("All");

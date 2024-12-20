@@ -24,7 +24,7 @@ const LogInDriver = () => {
        }
 try {
   const response=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/driver/login`,LogInData)
-   console.log(response.data);
+   console.log(response);
   if(response.data.success){
     localStorage.setItem('token',response.data.token)
     messageToast("Login Successfully")
@@ -34,7 +34,7 @@ try {
     }, 4000);
   }
 } catch (error) {
-  console.log(error.response.data);
+  console.log(error);
   messageToastError("Error : wrong credentials")
   
 }finally{

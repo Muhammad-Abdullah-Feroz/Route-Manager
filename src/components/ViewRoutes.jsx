@@ -173,6 +173,11 @@ const RouteDetails = () => {
                 </div>
               </div>
             ))}
+            {routeData.length === 0 && (
+              <div className="p-4 bg-red-500 text-white rounded-lg">
+                No routes found.
+              </div>
+            )}
           </div>
         </>
       )}

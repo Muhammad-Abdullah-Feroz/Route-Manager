@@ -14,7 +14,7 @@ import { GrMapLocation } from 'react-icons/gr';
 import Tracking from './Tracking';
 import Chatbox from './chatbox';
 
-const UserPanel = () => {
+const UserPanel = ({userData}) => {
   const [selectedView, setSelectedView] = useState('dashboard'); // Default view is Dashboard
   const navigate = useNavigate();
   const [isSidebarExpanded, setIsSidebarExpanded] = useState(false);
@@ -85,7 +85,7 @@ const UserPanel = () => {
           {selectedView === 'routes' && <ViewRoutes />}
           {selectedView === 'logComplaint' && <LogComplaint />}
           {selectedView === 'profile' && <Profile />}
-          <Chatbox />
+          <Chatbox userData={userData} refer={'uet_users'}/>
         </main>
       </div>
     </div>

@@ -21,7 +21,7 @@ import AdminAuthMiddleware from './components/middleware/AdminAuth'
 import DriverAuthMiddleware from './components/middleware/DriverAuth'
 import DriverDashboard from './components/driver/DriverDashboard'
 import LogInDriver from './components/driver/LoginDriver'
-import Chatbox from './components/chatbox'
+// import Chatbox from './components/chatbox'
 
 function App() {
   const router = createBrowserRouter([
@@ -53,10 +53,10 @@ function App() {
       path: '/user/auth/forget/verify/:slug',
       element:<ResetPassword/>
     },
-    {
-      path:"/user/chatbox",
-      element:<UserAuthMiddleware><Chatbox/></UserAuthMiddleware>
-    },
+    // {
+    //   path:"/user/chatbox",
+    //   element:<UserAuthMiddleware><Chatbox/></UserAuthMiddleware>
+    // },
     {
       path: '/admin/add-route',
       element: <AdminAuthMiddleware><AddRouteForm /></AdminAuthMiddleware>
