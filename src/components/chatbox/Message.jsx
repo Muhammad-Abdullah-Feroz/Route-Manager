@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import { motion } from 'framer-motion'
 
 const Message = ({ _time, text, userId, sender }) => {
-  console.log('Message rendered',userId,sender);
+  // console.log('Message rendered',userId,sender);
   
   const isSender = userId === sender;
   const alignmentClass = isSender ? 'self-end bg-blue-600 text-white' : 'self-start bg-gray-200 text-black';

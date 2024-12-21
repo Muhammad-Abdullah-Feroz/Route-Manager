@@ -8,7 +8,10 @@ import {  IoClose, IoPersonAddOutline, IoPersonOutline } from 'react-icons/io5'
 import io from 'socket.io-client'
 import axios from 'axios'
 import ChatModal from './ChatModal'
-import { formatTime } from '../../handlers/format-date'
+import { formatTime, formatTimeForChatSection } from '../../handlers/format-date'
+import { set } from 'react-hook-form'
+import { toast } from 'react-toastify'
+import { use } from 'react'
 
 const socket = io(`${import.meta.env.VITE_BACKEND_URL}`)
 
@@ -52,7 +55,8 @@ const Chatbox = ({userData, refer}) => {
   },[])
   useEffect(() => {
     socket.emit('register', userInfo.id)
-    socket.emit('get-all-chats', userInfo.id)
+    // socket.emit('get-all-chats', userInfo.id)
+    getAllAready_chats()
     
     
 
@@ -60,17 +64,31 @@ const Chatbox = ({userData, refer}) => {
       socket.off('chat message')
     }
   }, [userInfo.id])
-  socket.on('all-chats', (chats) => {
-    // setAllChats(chats)
-    setAlreadyStartedChats(chats)
-    // console.log("ALL chats ",chats,AllChats)
-  })
-  socket.on('chat-message', (msg) => {
+  // socket.on('all-chats', (chats) => {
+  //   // setAllChats(chats)
+  //   setAlreadyStartedChats(chats)
+  //   // console.log("ALL chats ",chats,AllChats)
+  // })
+  useEffect(() => {
+    socket.on('chat-message', (msg) => {
 
-    // console.log("Message received ",msg);
-    
-    // setMessages(prevMessages => [...prevMessages, msg])
-  })
+      // console.log("Hello i am here now ",selectedChat.id==msg.sender, selectedChat.id==msg.receiver);
+      if(selectedChat && (selectedChat?.id==msg.sender || selectedChat?.id==msg.receiver)){
+        socket.emit('mark-as-read',{chatId:msg._id,userId:userInfo.id})
+        setMessages(msg.messages)
+        socket.on('sync-chat', (msg) => {
+  
+        getAllAready_chats();
+        })
+      }else{
+  
+        getAllAready_chats();
+      }
+  
+    })
+  }
+  ,[socket])
+
   const handleSend = (e) => {
     e.preventDefault()
     // if
@@ -86,7 +104,9 @@ const Chatbox = ({userData, refer}) => {
       
       socket.emit('chat-message', message)
       socket.on('chat-message', (msg) => {
-        console.log("Message received ",msg);
+
+        // console.log("Hello i am here now  in function caht",msg);
+        // console.log("Message received ",msg);
         setMessages(msg.messages)
       }
     )
@@ -94,7 +114,7 @@ const Chatbox = ({userData, refer}) => {
       setInput('')
       
 
-      socket.emit('get-all-chats', userInfo.id)
+      getAllAready_chats();
     }
   }
 
@@ -103,6 +123,15 @@ const Chatbox = ({userData, refer}) => {
     setIsChatListLoading(true)
   }
 
+  const getAllAready_chats=()=>{
+    socket.emit('get-all-chats', userInfo.id) 
+    socket.on('all-chats', (chats) => {
+      // setAllChats(chats)
+      setAlreadyStartedChats(chats)
+      // console.log("ALL chats ",chats,AllChats)
+    }
+  )
+  }
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setIsChatListLoading(false)
@@ -111,13 +140,19 @@ const Chatbox = ({userData, refer}) => {
   }, [search])
 
   const handleSelectChat = (chat) => {
-
+    // console.log("Chat is ",chat,chat.chatId);
     setAddChatModalOpen(false)
-    socket.emit('sync-chat', { sender: userInfo.id, receiver: chat.id }) 
+    // socket.emit('sync-chat', { sender: userInfo.id, receiver: chat.id }) 
+    if(chat.chatId){
+    socket.emit('mark-as-read',{chatId:chat.chatId,userId:userInfo.id,receiver: chat.id})
+    }else{
+      socket.emit('sync-chat', { sender: userInfo.id, receiver: chat.id })
+    }
     socket.on('sync-chat', (msg) => {
       // console.log("Message received ",msg);
       setMessages(msg.messages)
     })
+    getAllAready_chats();
     // console.log("chat is ", chat)
     setIsMessageLoading(true)
     setSelectedChat(chat)
@@ -127,20 +162,10 @@ const Chatbox = ({userData, refer}) => {
       setIsMessageLoading(false)
       scrollToBottom();
     }, 500)
-      
+      getAllAready_chats();
   }
 
-  // const handleSelectChatFromModal = (chat) => {
-  //   setSelectedChat(chat)
-  //   setAddChatModalOpen(false)
-  // }
-// useEffect(() => {
-//   first
 
-//   return () => {
-//     second
-//   }
-// }, [third])
 
   const alreadyChatFilter = AlreadyStartedChats.filter(chat => 
     chat.otherMember.username?.toLowerCase().includes(search.toLowerCase())
@@ -148,14 +173,26 @@ const Chatbox = ({userData, refer}) => {
   // console.log("Already started chats ",AlreadyStartedChats);
   
   const scrollToBottom = () => {
-    // console.log("scrolling to bottom");
-    
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   useEffect(() => {
     scrollToBottom();
   }, [messages, isMessageLoading]);
+
+  const groupMessagesByDate = (messages) => {
+    if (!messages) return {};
+    return messages.reduce((acc, message) => {
+      const dateKey = formatTimeForChatSection(message.timestamp);
+      if (!acc[dateKey]) {
+        acc[dateKey] = [];
+      }
+      acc[dateKey].push(message);
+      return acc;
+    }, {});
+  };
+
+  const groupedMessages = groupMessagesByDate(messages);
 
   return (
     <>
@@ -204,7 +241,7 @@ const Chatbox = ({userData, refer}) => {
                       <motion.div 
                         key={index} 
                         className="relative p-2 max-w-full cursor-pointer hover:bg-gray-200 font-light rounded-lg flex gap-2 items-center overflow-hidden" 
-                        onClick={() => handleSelectChat({refer:chat.otherMember.model,id:chat.otherMember.id,name:chat.otherMember.username})}
+                        onClick={() => handleSelectChat({chatId:chat._id,refer:chat.otherMember.model,id:chat.otherMember.id,name:chat.otherMember.username})}
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.3, delay: index * 0.1 }}
@@ -213,12 +250,10 @@ const Chatbox = ({userData, refer}) => {
                         <div> 
                           <div className='flex items-center '>
                             <h1 className='font-semibold max-w-[150px] truncate'>{chat.otherMember.username}</h1> 
-                            <span className='absolute right-1 font-extralight text-xs'>{formatTime(chat.lastMessage.timestamp)}</span>
                           </div>
-                          <div className="msg text-[13px] max-w-[230px] truncate">{ chat.lastMessage.message}</div>
                         </div>
                         {
-                         <span className="absolute bg-blue-400 font-extralight px-2.5 rounded-full text-white right-2 bottom-2 text-[12px] text-center">{chat.unreadMessagesCount}</span>
+                         chat.unreadMessagesCount>0 && <span className="absolute bg-blue-400 font-extralight px-2.5 rounded-full text-white right-2 bottom-2 text-[12px] text-center">{chat.unreadMessagesCount}</span>
                         }
                       </motion.div>
                     ))
@@ -270,8 +305,13 @@ const Chatbox = ({userData, refer}) => {
               ):(
                 <>
                   <div className="flex-1 overflow-y-auto p-2">
-                    {messages && messages.length > 0 && messages.map((msg, index) => (
-                      <Message key={msg._id} text={msg.message} sender={msg.sender} userId={userInfo.id} _time={formatTime(msg.timestamp)} />
+                    {Object.keys(groupedMessages).map((dateKey, index) => (
+                      <div key={index}>
+                        <div className="text-center text-gray-500 text-xs my-2">{dateKey}</div>
+                        {groupedMessages[dateKey].map((msg) => (
+                          <Message key={msg._id} text={msg.message} sender={msg.sender} userId={userInfo.id} _time={formatTime(msg.timestamp)} />
+                        ))}
+                      </div>
                     ))}
                     <div ref={messagesEndRef} />
                   </div>

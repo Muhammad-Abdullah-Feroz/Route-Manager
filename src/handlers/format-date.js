@@ -33,6 +33,27 @@ function formatDate(dateString) {
   
     return strTime;
   }
+  function formatTimeForChatSection(dateString){  
+    
+    const date = new Date(dateString);
+    const today = new Date();
+    const yesterday = new Date(today);
+    yesterday.setDate(today.getDate() - 1);
+  
+    const isToday = date.toDateString() === today.toDateString();
+    const isYesterday = date.toDateString() === yesterday.toDateString();
+  
+    if (isToday) {
+      return 'Today';
+    } else if (isYesterday) {
+      return 'Yesterday';
+    } else {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    }
+  }
   
 //   const dateString = '2024-12-04T22:44:35.916Z';
 //   const formattedTime = formatTime(dateString);
@@ -44,5 +65,6 @@ function formatDate(dateString) {
 
   export{
     formatDate,
-    formatTime
+    formatTime,
+    formatTimeForChatSection
   };
