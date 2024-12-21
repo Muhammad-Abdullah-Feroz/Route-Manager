@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { IoClose, IoPerson, IoPersonCircleOutline, IoPersonOutline } from 'react-icons/io5'
+import { IoClose,   IoPersonOutline } from 'react-icons/io5'
 import SpanLoader from '../SpanLoader'
-import { set } from 'react-hook-form'
-import { div } from 'framer-motion/client'
 import { motion } from 'framer-motion'
+import {  BsChatRightDots } from 'react-icons/bs'
 
 const ChatModal = ({ data, setAddChatModalOpen, setSelectedChat }) => {
   const [search, setSearch] = useState('')
@@ -36,13 +35,13 @@ const ChatModal = ({ data, setAddChatModalOpen, setSelectedChat }) => {
       transition={{ duration: 0.5 }}
     >
       <motion.div 
-        className="bg-white rounded-lg shadow-lg w-96 max-h-[300px] p-4"
+        className="bg-white rounded-lg shadow-lg w-96  p-4 "
         initial={{ scale: 0.8 }}
         animate={{ scale: 1 }}
         transition={{ duration: 0.3 }}
       >
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-semibold">Select Chat</h2>
+          <h2 className="text-xl font-semibold flex gap-2 items-center"><BsChatRightDots/>Select Chat</h2>
           <IoClose 
             className="cursor-pointer" 
             size={25} 
@@ -54,7 +53,7 @@ const ChatModal = ({ data, setAddChatModalOpen, setSelectedChat }) => {
           placeholder="Search..."
           value={search}
           onChange={handleSearch}
-          className="w-full border font-light border-gray-300 focus:border-blue-400 focus:border-2 rounded-lg p-2 mb-4"
+          className="w-full border font-light outline-none border-gray-300 focus:border-blue-400 focus:border-2 rounded-lg p-2 mb-4"
         />
         <div className="max-h-64 overflow-y-auto">
           {isLoading ? (
@@ -72,8 +71,16 @@ const ChatModal = ({ data, setAddChatModalOpen, setSelectedChat }) => {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.3, delay: index * 0.1 }}
                 >
-                  <IoPersonOutline size={20} />
-                  {item.name}
+                  <IoPersonOutline className='border border-gray-200 rounded-full p-2 size-10' />
+                  <div className='flex flex-col w-full'>
+                    <div className='text-[16px] font-semibold flex items-center'>
+                      <span className='truncate max-w-[200px]'>{item.name}</span>
+                      {item.refer=='uet_drivers' && <span className='text-xs font-light ml-1'>(Driver)</span>}
+                    </div>
+                    <div className='text-[14px] font-normal max-w-[200px] truncate'>
+                     {item.email}
+                    </div>
+                  </div>
                 </motion.div>
               ))
             ) : (

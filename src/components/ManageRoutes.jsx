@@ -82,7 +82,7 @@ const ManageRoutes = () => {
     console.log("handle driver",route.driver);
     console.log("handle driver",DriversData);
     
-    setDriversData([...DriversData,{_id:route.driver.value,name:route.driver.label}]);
+    setDriversData([...DriversData,{_id:route.driver.value,username:route.driver.label}]);
     setSelectedRoute(route);
     setActiveComponent("edit");
   };

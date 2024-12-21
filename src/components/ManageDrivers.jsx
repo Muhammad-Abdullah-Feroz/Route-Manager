@@ -62,7 +62,7 @@ const ManageDrivers = ({ isLoading, drivers, onAddDriver, onEditDriver,FetchData
                           {(index + 1)+((currentPage-1)*driversPerPage)}
                         </td>
                     <td className="py-3 px-4 text-left min-w-[250px]">
-                      {driver.name}
+                      {driver.username}
                     </td>
                     <td className="py-3 px-4 text-left min-w-[250px]">
                       {driver.email}

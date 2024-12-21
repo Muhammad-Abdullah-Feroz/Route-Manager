@@ -12,7 +12,7 @@ const EditDriver = ({ driver, onBack }) => {
   } = useForm({
     defaultValues: {
       id: driver._id,
-      name: driver.name,
+      name: driver.username,
       phone_no: driver.phone,
       email: driver.email,
       cnic: driver.cnic,

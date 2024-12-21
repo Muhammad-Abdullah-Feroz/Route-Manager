@@ -31,7 +31,7 @@ const EditRouteForm = ({ route, drivers, stops, onBack,  }) => {
     // drivers=[...drivers,route.driver];
     setDriverOptions( drivers.map(driver => ({
       value: driver._id,
-      label: driver.name,
+      label: driver.username,
     })))
     setStopOptions(stops?.map(stop => ({
       value: stop._id,

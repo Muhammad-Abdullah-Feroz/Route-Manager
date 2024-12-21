@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types'
+
 import { motion } from 'framer-motion'
 
 const Message = ({ _time, text, userId, sender }) => {
