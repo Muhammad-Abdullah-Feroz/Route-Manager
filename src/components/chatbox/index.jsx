@@ -30,7 +30,6 @@ const Chatbox = ({userData, refer}) => {
   const [AddChatModalOpen, setAddChatModalOpen] = useState(false)
   const messagesEndRef = useRef(null);
   const userInfo = {
-    // eslint-disable-next-line react/prop-types
     id: userData?._id,
     refer: refer 
   }
@@ -114,6 +113,8 @@ const Chatbox = ({userData, refer}) => {
     }
   )
   }
+
+  
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       setIsChatListLoading(false)
@@ -132,7 +133,7 @@ const Chatbox = ({userData, refer}) => {
       setMessages(msg.messages)
       getAllAready_chats();
     })
-
+    
     getAllAready_chats();
     setIsMessageLoading(true)
     setSelectedChat(chat)
@@ -144,9 +145,9 @@ const Chatbox = ({userData, refer}) => {
     }, 500)
       getAllAready_chats();
   }
-
-
-
+  
+  
+  
   const alreadyChatFilter = AlreadyStartedChats
   .filter(chat => chat.otherMember.username?.toLowerCase().includes(search.toLowerCase()))
   .sort((a, b) => b.unreadMessagesCount - a.unreadMessagesCount);
@@ -154,11 +155,11 @@ const Chatbox = ({userData, refer}) => {
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
-
+  
   useEffect(() => {
     scrollToBottom();
   }, [messages, isMessageLoading]);
-
+  
   const groupMessagesByDate = (messages) => {
     if (!messages) return {};
     return messages.reduce((acc, message) => {
@@ -171,6 +172,7 @@ const Chatbox = ({userData, refer}) => {
     }, {});
   };
   const groupedMessages = groupMessagesByDate(messages);
+  console.log(groupedMessages);
 
   return (
     <>
@@ -296,7 +298,7 @@ const Chatbox = ({userData, refer}) => {
                       <div key={index}>
                         <div className="text-center text-gray-500 text-xs my-2">{dateKey}</div>
                         {groupedMessages[dateKey].map((msg) => (
-                          <Message key={msg._id} text={msg.message} sender={msg.sender} userId={userInfo.id} _time={formatTime(msg.timestamp)} />
+                          <Message key={msg._id} text={msg.message} isread={msg.isread} sender={msg.sender} userId={userInfo.id} _time={formatTime(msg.timestamp)} />
                         ))}
                       </div>
                     ))}

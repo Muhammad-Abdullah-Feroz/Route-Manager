@@ -1,7 +1,8 @@
 
 import { motion } from 'framer-motion'
+import { IoCheckmarkDoneOutline, IoCheckmarkOutline } from 'react-icons/io5';
 
-const Message = ({ _time, text, userId, sender }) => {
+const Message = ({ _time, isread,text, userId, sender }) => {
   // console.log('Message rendered',userId,sender);
   
   const isSender = userId === sender;
@@ -18,7 +19,13 @@ const Message = ({ _time, text, userId, sender }) => {
     >
       <div className={`message px-4 py-2 shadow-md ${alignmentClass} ${bubbleClass}`}>
         <p className="text-sm">{text}</p>
-        <span className={`text-xs font-light ${isSender ? 'text-gray-300' : 'text-gray-600'}`}>{_time}</span>
+        <div className='flex items-center justify-end gap-2'>
+        <span className={`text-xs font-light ${isSender ? 'text-gray-300' : 'text-gray-600'}`}>{_time} 
+        </span> 
+          <span>{(isSender && isread)&& <IoCheckmarkDoneOutline className='text-gray-200'/>}</span>
+          <span>{(isSender && !isread)&& <IoCheckmarkOutline className='text-gray-200'/>}</span>
+        </div>
+      
       </div>
     </motion.div>
   )
