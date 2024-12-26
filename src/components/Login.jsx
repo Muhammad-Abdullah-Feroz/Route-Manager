@@ -59,7 +59,7 @@ const Login = () => {
 
     return (
         <>       
-        <button onClick={()=>navigate('/admin/auth/lgoin')}>admin login</button>
+        {/* <button onClick={()=>navigate('/admin/auth/lgoin')}>admin login</button> */}
         
          <div className="relative flex justify-center items-center min-w-full h-screen bg-white/70 backdrop-blur-lg border border-white/20 ">
             {/* Background Image */}

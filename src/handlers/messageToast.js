@@ -13,16 +13,20 @@ const messageToast = (message) => {
     pauseOnFocusLoss: false,
     position: "bottom-right",
     // theme:"colored",
-    autoClose: 4000,
+    autoClose: 2000,
+    closeOnClick: true,
+    draggable:true
   });
   playSound(notify);
 };
 const messageToastError = (message) => {
   toast.error(message, {
     pauseOnFocusLoss: false,
-    position: "bottom-right",
+    position: "bottom-right",  
+      autoClose: 2000,
+    closeOnClick: true,
   });
-  playSound(notify_alert);
+  // playSound(notify_alert);
 };
 
 export { messageToast, messageToastError };

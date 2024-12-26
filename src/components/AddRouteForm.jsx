@@ -23,7 +23,7 @@ console.log("AddRouteForm -> stops", stops);
   useEffect(() => {
     setDriverOptions(drivers?.map(driver => ({
       value: driver._id,
-      label: driver.name,
+      label: driver.username,
     })));
     setStopOptions(stops?.map(stop => ({
       value: stop._id,
